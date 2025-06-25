@@ -29,8 +29,9 @@
 
             <ImageButton
                 android:id="@+id/imageButton1"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_width="68dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
                 android:layout_weight="0.5"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
@@ -53,10 +54,11 @@
             tools:ignore="MissingConstraints">
 
             <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_weight="1"
+                android:id="@+id/imageButton5"
+                android:layout_width="68dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
@@ -78,9 +80,10 @@
 
             <ImageButton
                 android:id="@+id/imageButton3"
-                android:layout_width="match_parent"
+                android:layout_width="68dp"
                 android:layout_height="65dp"
-                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
@@ -102,9 +105,10 @@
 
             <ImageButton
                 android:id="@+id/imageButton4"
-                android:layout_width="match_parent"
+                android:layout_width="68dp"
                 android:layout_height="62dp"
-                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
