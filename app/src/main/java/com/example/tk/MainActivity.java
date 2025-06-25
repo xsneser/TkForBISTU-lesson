@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserMainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
             }
         });
         videoView = findViewById(R.id.videoView);
