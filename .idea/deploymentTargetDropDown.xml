@@ -6,12 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\lenovo\.android\avd\Pixel_7_API_34.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="FYF6XSXGT4ZLQG6L" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2025-06-25T08:49:24.380637200Z" />
+    <timeTargetWasSelectedWithDropDown value="2025-06-25T08:51:15.772932700Z" />
   </component>
 </project>
