@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 videoView.start(); // 视频播放完成后重新开始
             }
         });
-
     }
 
 
@@ -48,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
             // 设置视频路径（示例为res/raw目录下的视频）
             Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/raw/video");
             videoView.setVideoURI(videoUri);
-
             // 开始播放视频
             videoView.start();
-
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "视频播放失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
