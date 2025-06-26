@@ -6,11 +6,15 @@
     android:layout_height="match_parent">
 
 
+
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="78dp"
         android:orientation="horizontal"
+        android:background="#F0F0F0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -30,6 +34,7 @@
             tools:ignore="MissingConstraints">
 
             <ImageButton
+
                 android:id="@+id/imageButton1"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
@@ -43,7 +48,8 @@
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Main"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -72,7 +78,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Message"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -100,7 +107,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="      TextView" />
+                android:text="New"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -128,7 +136,9 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Me"
+                android:gravity="center"/>
+
 
         </LinearLayout>
 
@@ -140,7 +150,8 @@
         android:layout_height="wrap_content"
         android:text="main"
         tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="328dp" />
+        tools:layout_editor_absoluteY="328dp"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

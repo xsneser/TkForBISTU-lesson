@@ -43,7 +43,8 @@
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Main"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -72,7 +73,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Message"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -100,7 +102,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="      TextView" />
+                android:text="New"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -128,7 +131,8 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Me"
+                android:gravity="center"/>
 
         </LinearLayout>
 
