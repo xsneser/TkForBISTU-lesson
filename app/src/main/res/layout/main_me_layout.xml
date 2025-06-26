@@ -30,6 +30,7 @@
                 android:padding="16dp">
 
                 <LinearLayout
+                    android:id="@+id/login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -81,8 +82,8 @@
                         android:id="@+id/arrowIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@android:drawable/arrow_up_float"
                         android:rotation="270"
+                        android:src="@android:drawable/arrow_up_float"
                         app:tint="@android:color/darker_gray" />
                 </LinearLayout>
             </LinearLayout>
