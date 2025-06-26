@@ -22,6 +22,26 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".Sea_deluser_Activity"
+            android:label="用户ME界面"
+            android:parentActivityName=".starActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".Insertuser_Activity"
+            android:label="用户ME界面"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".starActivity"
+            android:label="用户ME界面"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+        </activity>
         <!-- 用户主界面Activity -->
         <activity
             android:name=".UserMainActivity"
@@ -57,8 +77,15 @@
         <!-- 用户Login界面Activity -->
         <activity
             android:name=".SignupActivity"
+            android:label="用户signup界面"
+            android:parentActivityName=".LoginActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
             android:label="用户login界面"
-            android:parentActivityName=".UserMainActivity"
+            android:parentActivityName=".UserMainMeActivity"
             android:exported="false">
         </activity>
 
