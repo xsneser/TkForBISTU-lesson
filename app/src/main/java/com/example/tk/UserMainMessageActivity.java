@@ -14,7 +14,7 @@ public class UserMainMessageActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_message_layout);
 
-        LinearLayout messageView = findViewById(R.id.linearLayout2);
+        LinearLayout messageView = findViewById(R.id.linearLayout1);
         messageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
