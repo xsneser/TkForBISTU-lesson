@@ -1,24 +1,24 @@
 package com.example.tk;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class UserMainActivity extends AppCompatActivity{
+import androidx.appcompat.app.AppCompatActivity;
+
+public class UserMainMessageActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_layout);
+        setContentView(R.layout.main_message_layout);
 
         LinearLayout messageView = findViewById(R.id.linearLayout2);
         messageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainActivity.this, UserMainMessageActivity.class);
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
@@ -29,7 +29,7 @@ public class UserMainActivity extends AppCompatActivity{
         newView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainActivity.this, UserMainNewActivity.class);
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainNewActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
@@ -39,12 +39,11 @@ public class UserMainActivity extends AppCompatActivity{
         meView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainActivity.this, UserMainMeActivity.class);
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainMeActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
             }
         });
-
     }
 }

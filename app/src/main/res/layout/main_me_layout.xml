@@ -135,12 +135,12 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="main"
-        tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="328dp" />
+        android:text="me"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="422dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
