@@ -19,7 +19,7 @@ public class UserMainActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(UserMainActivity.this, UserMainMeActivity.class);
                 startActivity(intent);
-                //overridePendingTransition(0, 0);
+                overridePendingTransition(0, 0);
                 //finish();
             }
         });
