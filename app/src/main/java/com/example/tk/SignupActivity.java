@@ -1,10 +1,8 @@
 package com.example.tk;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class LoginActivity extends AppCompatActivity{
+public class SignupActivity extends AppCompatActivity{
 
     // 声明界面控件
     private TextInputLayout usernameTextInputLayout;
@@ -27,7 +25,7 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.log_in);
+        setContentView(R.layout.sign_up);
 
         // 绑定界面控件
         usernameTextInputLayout = findViewById(R.id.usernameTextInputLayout);
@@ -45,7 +43,7 @@ public class LoginActivity extends AppCompatActivity{
                 // 验证密码一致性
                 if (validatePasswords()) {
                     // 密码一致，进行注册逻辑
-                    Toast.makeText(LoginActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
                     // 这里可以添加实际的注册逻辑，如调用API
                 }
             }
