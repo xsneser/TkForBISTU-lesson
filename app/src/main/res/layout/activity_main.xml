@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/enter"
-        android:layout_width="221dp"
-        android:layout_height="64dp"
+        android:layout_width="193dp"
+        android:layout_height="63dp"
         android:text="点击进入"
         android:textColorHighlight="#C81B1B"
         android:textColorLink="#7E4747"
