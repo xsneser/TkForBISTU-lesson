@@ -57,8 +57,15 @@
         <!-- 用户Login界面Activity -->
         <activity
             android:name=".SignupActivity"
+            android:label="用户signup界面"
+            android:parentActivityName=".LoginActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
             android:label="用户login界面"
-            android:parentActivityName=".UserMainActivity"
+            android:parentActivityName=".UserMainMeActivity"
             android:exported="false">
         </activity>
 
