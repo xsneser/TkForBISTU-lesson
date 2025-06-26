@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="custom_green">#388E3C</color>
+    <color name="button_pressed">#f5f5f5</color>
+    <color name="button_focused">#f0f0f0</color>
 </resources>
+
