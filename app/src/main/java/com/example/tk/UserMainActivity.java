@@ -21,7 +21,7 @@ public class UserMainActivity extends AppCompatActivity{
                 Intent intent = new Intent(UserMainActivity.this, UserMainMessageActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
-                //finish();
+                finish();
             }
         });
 
@@ -32,7 +32,7 @@ public class UserMainActivity extends AppCompatActivity{
                 Intent intent = new Intent(UserMainActivity.this, UserMainNewActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
-                //finish();
+                finish();
             }
         });
         LinearLayout meView = findViewById(R.id.linearLayout4);
@@ -42,7 +42,7 @@ public class UserMainActivity extends AppCompatActivity{
                 Intent intent = new Intent(UserMainActivity.this, UserMainMeActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
-                //finish();
+                finish();
             }
         });
 
