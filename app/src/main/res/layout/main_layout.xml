@@ -20,6 +20,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout1"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_toRightOf="@id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -32,6 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_weight="0.5"
+                android:clickable="false"
+                android:focusable="false"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
@@ -45,6 +49,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_toRightOf="@id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -57,6 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
@@ -70,6 +78,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_toRightOf="@id/imageButton4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -81,6 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
@@ -94,6 +106,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout4"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -105,6 +119,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
                 app:srcCompat="@android:drawable/btn_star_big_on"
                 tools:ignore="MissingConstraints" />
 
@@ -117,6 +133,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="main"
+        tools:layout_editor_absoluteX="107dp"
+        tools:layout_editor_absoluteY="328dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,6 +30,15 @@
             android:exported="false">
         </activity>
 
+        <!-- 用户主界面Activity -->
+        <activity
+            android:name=".UserMainMeActivity"
+            android:label="用户主界面"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+        </activity>
+
+
     </application>
 
 </manifest>
