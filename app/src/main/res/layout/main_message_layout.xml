@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="78dp"
         android:orientation="horizontal"
+        android:background="@drawable/background_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -36,7 +37,8 @@
                 android:layout_weight="0.5"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                android:background="#00000000"
+                app:srcCompat="@android:drawable/ic_menu_agenda"
                 tools:ignore="MissingConstraints" />
 
             <TextView
@@ -66,7 +68,9 @@
                 android:layout_weight="1"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                android:background="#00000000"
+                app:tint="#07C160"
+                app:srcCompat="@android:drawable/ic_dialog_email"
                 tools:ignore="MissingConstraints" />
 
             <TextView
@@ -95,7 +99,8 @@
                 android:layout_weight="1"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                android:background="#00000000"
+                app:srcCompat="@android:drawable/ic_menu_add"
                 tools:ignore="MissingConstraints" />
 
             <TextView
@@ -124,7 +129,8 @@
                 android:layout_weight="1"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                android:background="#00000000"
+                app:srcCompat="@android:drawable/ic_menu_myplaces"
                 tools:ignore="MissingConstraints" />
 
             <TextView
