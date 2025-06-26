@@ -41,7 +41,7 @@
         <!-- 用户message界面Activity -->
         <activity
             android:name=".UserMainMessageActivity"
-            android:label="用户ME界面"
+            android:label="用户message界面"
             android:parentActivityName=".UserMainActivity"
             android:exported="false">
         </activity>
@@ -49,7 +49,15 @@
         <!-- 用户new界面Activity -->
         <activity
             android:name=".UserMainNewActivity"
-            android:label="用户ME界面"
+            android:label="用户new界面"
+            android:parentActivityName=".UserMainActivity"
+            android:exported="false">
+        </activity>
+
+        <!-- 用户Login界面Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:label="用户login界面"
             android:parentActivityName=".UserMainActivity"
             android:exported="false">
         </activity>

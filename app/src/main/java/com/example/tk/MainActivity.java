@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         enterView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UserMainActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
