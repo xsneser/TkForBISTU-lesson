@@ -25,7 +25,7 @@ public class UserMainNewActivity extends AppCompatActivity{
             }
         });
 
-        LinearLayout newView = findViewById(R.id.linearLayout3);
+        LinearLayout newView = findViewById(R.id.linearLayout1);
         newView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
