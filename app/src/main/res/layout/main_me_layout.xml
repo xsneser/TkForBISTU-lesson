@@ -4,6 +4,228 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!-- 我的页面内容区域 -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 用户信息卡片 -->
+            <LinearLayout
+                android:id="@+id/userInfoCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <!-- 用户头像 -->
+                    <ImageView
+                        android:id="@+id/userAvatar"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/darker_gray"
+                        android:contentDescription="用户头像"
+                        android:padding="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/sym_def_app_icon"
+                        app:tint="@android:color/white" />
+
+                    <!-- 用户信息 -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="未登录"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/userEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="点击登录"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- 箭头图标 -->
+                    <ImageView
+                        android:id="@+id/arrowIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="270"
+                        android:src="@android:drawable/arrow_up_float"
+                        app:tint="@android:color/darker_gray" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 功能列表分隔线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@android:color/darker_gray"
+                android:alpha="0.1" />
+
+            <!-- 功能列表 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <!-- 功能项1：我的订单 -->
+                <LinearLayout
+                    android:id="@+id/orderItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_my_calendar"
+                        app:tint="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:text="我的订单"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:rotation="270"
+                        app:tint="@android:color/darker_gray" />
+                </LinearLayout>
+
+                <!-- 分隔线 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@android:color/darker_gray"
+                    android:alpha="0.1" />
+
+                <!-- 功能项2：我的收藏 -->
+                <LinearLayout
+                    android:id="@+id/favoriteItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        app:tint="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:text="我的收藏"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:rotation="270"
+                        app:tint="@android:color/darker_gray" />
+                </LinearLayout>
+
+                <!-- 分隔线 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@android:color/darker_gray"
+                    android:alpha="0.1" />
+
+                <!-- 功能项3：设置 -->
+                <LinearLayout
+                    android:id="@+id/settingsItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_preferences"
+                        app:tint="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:text="设置"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:rotation="270"
+                        app:tint="@android:color/darker_gray" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 
     <LinearLayout
@@ -11,6 +233,7 @@
         android:layout_width="match_parent"
         android:layout_height="78dp"
         android:orientation="horizontal"
+        android:background="@drawable/background_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -34,16 +257,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_weight="0.5"
+                android:background="#00000000"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                app:srcCompat="@android:drawable/ic_menu_agenda"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Main"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -62,17 +287,19 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:background="#00000000"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                app:srcCompat="@android:drawable/ic_dialog_email"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Message"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -93,14 +320,16 @@
                 android:layout_weight="1"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                android:background="#00000000"
+                app:srcCompat="@android:drawable/ic_menu_add"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="      TextView" />
+                android:text="New"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -119,28 +348,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:layout_weight="1"
+                android:background="#00000000"
                 android:clickable="false"
                 android:focusable="false"
-                app:srcCompat="@android:drawable/btn_star_big_on"
+                app:srcCompat="@android:drawable/ic_menu_myplaces"
+                app:tint="#07C160"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
-                android:text="       TextView" />
+                android:text="Me"
+                android:gravity="center"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="me"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="422dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

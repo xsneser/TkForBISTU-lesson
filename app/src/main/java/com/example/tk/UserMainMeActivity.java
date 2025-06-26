@@ -45,5 +45,14 @@ public class UserMainMeActivity extends AppCompatActivity{
                 finish();
             }
         });
+
+        LinearLayout loginView = findViewById(R.id.login);
+        loginView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserMainMeActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
