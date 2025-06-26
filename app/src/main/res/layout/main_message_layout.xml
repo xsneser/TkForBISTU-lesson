@@ -134,13 +134,5 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="145dp"
-        android:layout_height="75dp"
-        android:text="message"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="180dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
