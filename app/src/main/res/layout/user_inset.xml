@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/insert_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="请输入用户名"
+        android:padding="10dp"
+        android:background="@android:color/darker_gray"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/insert_paswd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="请输入密码"
+        android:padding="10dp"
+        android:background="@android:color/darker_gray"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/black"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/save_usermes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="添加该用户信息"
+        android:textSize="17sp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
