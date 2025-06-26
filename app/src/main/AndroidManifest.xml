@@ -22,6 +22,26 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".Sea_deluser_Activity"
+            android:label="用户ME界面"
+            android:parentActivityName=".starActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".Insertuser_Activity"
+            android:label="用户ME界面"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".starActivity"
+            android:label="用户ME界面"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+        </activity>
         <!-- 用户主界面Activity -->
         <activity
             android:name=".UserMainActivity"
