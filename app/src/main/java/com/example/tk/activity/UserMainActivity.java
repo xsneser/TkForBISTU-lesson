@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.tk.R;
 import com.example.tk.backActivity.Insertuser_Activity;
-import com.example.tk.backActivity.Sea_deluser_Activity;
+import com.example.tk.SignLog.Sea_deluser_Activity;
 import com.example.tk.userDatabase.user_database;
 
 public class UserMainActivity extends AppCompatActivity {

@@ -1,25 +1,28 @@
-package com.example.tk.backActivity;
+package com.example.tk.SignLog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.tk.R;
+import com.example.tk.activity.UserMainMeActivity;
 import com.example.tk.dao.UserInfo;
 import com.example.tk.userDatabase.user_database;
 
 import java.util.List;
 
-public class Sea_deluser_Activity extends Activity {
+public class choiseUser_Activity extends Activity {
     private ListView user_list;
     private List<UserInfo> list;
     private user_database userDB;
@@ -34,9 +37,24 @@ public class Sea_deluser_Activity extends Activity {
         user_list = findViewById(R.id.mes);
         userDB = new user_database(this);
 
+        LinearLayout loginView = findViewById(R.id.top_bar);
+        loginView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(choiseUser_Activity.this,    LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         loadUserData();
         setupListViewAdapter();
         setupListViewClickListener();
+    }
+    protected void onRestart() {
+        loadUserData();
+        setupListViewAdapter();
+        setupListViewClickListener();
+        super.onRestart();
     }
 
     private void loadUserData() {
@@ -47,7 +65,7 @@ public class Sea_deluser_Activity extends Activity {
             user_mes = new String[list.size()];
 
             for (int i = 0; i < list.size(); i++) {
-                user_mes[i] = list.get(i).getUsername() + " " + list.get(i).getPaswd() + " " + list.get(i).getId();
+                user_mes[i] = list.get(i).getUsername() + " UID:" + list.get(i).getId();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,48 +91,15 @@ public class Sea_deluser_Activity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 final int userId = list.get(position).getId();
-
-                new AlertDialog.Builder(Sea_deluser_Activity.this)
-                        .setTitle("系统提示")
-                        .setMessage("确定删除么")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                deleteUser(userId);
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                // 取消操作，无需处理
-                            }
-                        })
-                        .show();
+                SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("is_logged_in", true);
+                editor.putString("username",list.get(position).getUsername());
+                editor.putString("ID",String.valueOf(userId));
+                editor.apply();
+                finish();
             }
         });
-    }
-
-    private void deleteUser(int userId) {
-        SQLiteDatabase db = null;
-        try {
-            db = userDB.getWritableDatabase();
-            userDB.delete(db, userId);
-            refresh();
-            Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "删除用户失败", Toast.LENGTH_SHORT).show();
-        } finally {
-            if (db != null && db.isOpen()) {
-                db.close();
-            }
-        }
-    }
-
-    private void refresh() {
-        finish();
-        Intent intent = new Intent(Sea_deluser_Activity.this, Sea_deluser_Activity.class);
-        startActivity(intent);
     }
 
     @Override
