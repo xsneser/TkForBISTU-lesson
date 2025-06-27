@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void playVideo() {
         try {
             // 设置视频路径（示例为res/raw目录下的视频）
-            Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/raw/video");
+            Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/raw/video1");
             videoView.setVideoURI(videoUri);
             // 开始播放视频
             videoView.start();
