@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".backActivity.Sea_deluser_Activity"
+            android:name=".SignLog.Sea_deluser_Activity"
             android:label="用户ME界面"
             android:parentActivityName=".backActivity.starActivity"
             android:exported="false">

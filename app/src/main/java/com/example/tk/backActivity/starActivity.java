@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.tk.R;
+import com.example.tk.SignLog.Sea_deluser_Activity;
 import com.example.tk.userDatabase.user_database;
 
 public class starActivity extends Activity {
