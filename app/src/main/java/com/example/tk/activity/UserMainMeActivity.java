@@ -10,7 +10,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tk.R;
+import com.example.tk.SignLog.LoginActivity;
 import com.example.tk.SignLog.Sea_deluser_Activity;
+import com.example.tk.SignLog.choiseUser_Activity;
 
 import android.content.SharedPreferences;
 import android.widget.TextView;
@@ -61,16 +63,8 @@ public class UserMainMeActivity extends AppCompatActivity{
         loginView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 检查登录状态
-                SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
-                boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
-
-                if (!isLoggedIn) {
-                    // 只有未登录时才跳转到登录页面
-                    Intent intent = new Intent(UserMainMeActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                // 已登录时不执行任何操作
+                Intent intent = new Intent(UserMainMeActivity.this, choiseUser_Activity.class);
+                startActivity(intent);
             }
         });
 
@@ -98,7 +92,6 @@ public class UserMainMeActivity extends AppCompatActivity{
                                 // 刷新界面UI
                                 refresh();
 
-
                             })
                             .setNegativeButton("取消", null)
                             .show();
@@ -108,27 +101,11 @@ public class UserMainMeActivity extends AppCompatActivity{
                     toast.show();
 
                 }
+
                 }
 
         });
     }
-
-
-
-
-/**
-        loginView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserMainMeActivity.this, Sea_deluser_Activity.class);
-                startActivity(intent);
-            }
-        });
-    }
-**/
-
-
-
 
 
     protected void onRestart() {
@@ -136,11 +113,16 @@ public class UserMainMeActivity extends AppCompatActivity{
         super.onRestart();
     }
 
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     private void refresh(){
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
 
-        if (isLoggedIn) {
+
             // 获取用户信息
             String username = sharedPreferences.getString("username", "未登录");
             String ID = sharedPreferences.getString("ID","点击登录");
@@ -149,9 +131,12 @@ public class UserMainMeActivity extends AppCompatActivity{
             TextView tvID=findViewById(R.id.userID);
 
             tvUsername.setText(username);
+        if (isLoggedIn) {
             tvID.setText("UID:"+ID);
-
+        }else{
+            tvID.setText(ID);
         }
+
 
     }
 
