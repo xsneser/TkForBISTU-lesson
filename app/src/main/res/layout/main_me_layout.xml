@@ -43,12 +43,11 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginEnd="16dp"
-                        android:background="@android:color/darker_gray"
+                        android:background="#ffffff"
                         android:contentDescription="用户头像"
                         android:padding="10dp"
                         android:scaleType="centerCrop"
-                        android:src="@android:drawable/sym_def_app_icon"
-                        app:tint="@android:color/white" />
+                        app:srcCompat="@drawable/_20250627175927" />
 
                     <!-- 用户信息 -->
                     <LinearLayout
@@ -222,6 +221,41 @@
                         android:rotation="270"
                         app:tint="@android:color/darker_gray" />
                 </LinearLayout>
+                <!-- 新增：退出登录功能项 -->
+                <LinearLayout
+                    android:id="@+id/logoutItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@android:drawable/ic_notification_overlay"
+                        app:tint="#E53935" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:text="退出登录"
+                        android:textColor="#E53935"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:rotation="270"
+                        app:tint="@android:color/darker_gray" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
