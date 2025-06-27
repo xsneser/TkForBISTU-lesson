@@ -5,6 +5,10 @@ public class UserInfo {
     private String username;
     private String paswd;
 
+    public UserInfo(){
+        super();
+    }
+
     public UserInfo(int id, String username, String paswd) {
         this.id = id;
         this.username = username;
