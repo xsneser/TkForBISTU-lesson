@@ -7,8 +7,9 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tk.SignLog.LoginActivity;
 import com.example.tk.R;
+import com.example.tk.SignLog.Sea_deluser_Activity;
+
 import android.content.SharedPreferences;
 import android.widget.TextView;
 
@@ -57,7 +58,7 @@ public class UserMainMeActivity extends AppCompatActivity{
         loginView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainMeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(UserMainMeActivity.this, Sea_deluser_Activity.class);
                 startActivity(intent);
             }
         });
