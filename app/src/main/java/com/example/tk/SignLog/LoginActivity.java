@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.SharedPreferences;
 
 import com.example.tk.R;
 import com.example.tk.dao.UserInfo;
@@ -37,7 +38,6 @@ public class LoginActivity extends AppCompatActivity{
         usernameTextInputLayout = findViewById(R.id.usernameTextInputLayout);
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout);
-
         passwordEditText = findViewById(R.id.passwordEditText);
         registerButton = findViewById(R.id.loginButton);
 
@@ -45,10 +45,18 @@ public class LoginActivity extends AppCompatActivity{
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (validatePasswords()&&checkLogin()) {
+                    int a=checkLogin();
+                if (validatePasswords()&&a!=0) {
                     // 密码一致，进行注册逻辑
                     Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                    // 保存登录状态和用户名
+                    SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("is_logged_in", true);
+                    editor.putString("username", usernameEditText.getText().toString().trim());
+                    editor.putString("ID",String.valueOf(a));
+                    editor.apply();
+
                     finish();
                 }
             }
@@ -88,7 +96,7 @@ public class LoginActivity extends AppCompatActivity{
         return true;
     }
 
-    private boolean checkLogin() {
+    private int checkLogin() {
         passwordTextInputLayout.setError(null);
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
@@ -96,11 +104,11 @@ public class LoginActivity extends AppCompatActivity{
         List<UserInfo> userList = userDB.querydata(null);
         for (UserInfo user : userList) {
             if (user.getUsername().equals(username) && user.getPaswd().equals(password)) {
-                return true;
+                return user.getId();
             }
         }
         passwordTextInputLayout.setError("密码或用户名错误");
-        return false;
+        return 0;
     }
 
 }
