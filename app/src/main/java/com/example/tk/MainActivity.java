@@ -10,7 +10,8 @@ import android.net.Uri;
 import android.widget.Toast;
 import android.widget.VideoView;
 import android.media.MediaPlayer;
-import android.widget.TextView;
+
+import com.example.tk.activity.UserMainActivity;
 
 public class MainActivity extends AppCompatActivity {
 

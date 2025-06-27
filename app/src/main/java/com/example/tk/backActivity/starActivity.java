@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.backActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.tk.R;
+import com.example.tk.userDatabase.user_database;
 
 public class starActivity extends Activity {
     public user_database user;
