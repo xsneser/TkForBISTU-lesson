@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.backActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.tk.R;
+import com.example.tk.dao.UserInfo;
+import com.example.tk.userDatabase.user_database;
 
 import java.util.List;
 
@@ -43,7 +47,7 @@ public class Sea_deluser_Activity extends Activity {
             user_mes = new String[list.size()];
 
             for (int i = 0; i < list.size(); i++) {
-                user_mes[i] = list.get(i).getUsername() + " " + list.get(i).getPaswd();
+                user_mes[i] = list.get(i).getUsername() + " " + list.get(i).getPaswd() + " " + list.get(i).getId();
             }
         } catch (Exception e) {
             e.printStackTrace();

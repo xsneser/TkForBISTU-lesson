@@ -1,13 +1,17 @@
-package com.example.tk;
+package com.example.tk.SignLog;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tk.R;
+import com.example.tk.userDatabase.user_database;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -45,6 +49,7 @@ public class SignupActivity extends AppCompatActivity{
                     // 密码一致，进行注册逻辑
                     Toast.makeText(SignupActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
                     // 这里可以添加实际的注册逻辑，如调用API
+                    init();
                 }
             }
         });
@@ -99,6 +104,17 @@ public class SignupActivity extends AppCompatActivity{
 
         // 所有验证通过
         return true;
+    }
+    public void init(){
+        EditText name_edit= findViewById(R.id.usernameEditText);
+        EditText paswd_edit= findViewById(R.id.passwordEditText);
+        String name_str=name_edit.getText().toString();
+        String paswd_str=paswd_edit.getText().toString();
+        user_database us_db=new user_database(SignupActivity.this);
+        SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();
+        us_db.adddata(sqLiteDatabase,name_str,paswd_str);
+        finish();
+
     }
 }
 

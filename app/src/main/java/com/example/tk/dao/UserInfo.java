@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.dao;
 
 public class UserInfo {
     private int id;

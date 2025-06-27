@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.SignLog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tk.R;
+import com.example.tk.dao.UserInfo;
+import com.example.tk.userDatabase.user_database;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -22,11 +26,12 @@ public class LoginActivity extends AppCompatActivity{
     private TextInputEditText passwordEditText;
 
     private Button registerButton;
-
+    private user_database userDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
+        userDB = new user_database(this);
 
         // 绑定界面控件
         usernameTextInputLayout = findViewById(R.id.usernameTextInputLayout);
@@ -40,11 +45,11 @@ public class LoginActivity extends AppCompatActivity{
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 验证密码一致性
-                if (validatePasswords()) {
+
+                if (validatePasswords()&&checkLogin()) {
                     // 密码一致，进行注册逻辑
                     Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
-                    // 这里可以添加实际的注册逻辑，如调用API
+                    finish();
                 }
             }
         });
@@ -69,30 +74,34 @@ public class LoginActivity extends AppCompatActivity{
         usernameTextInputLayout.setError(null);
         passwordTextInputLayout.setError(null);
 
-
-
-        // 基本验证：密码不能为空
+        // 基本验证：用户名和密码不能为空
+        if (username.isEmpty()) {
+            usernameTextInputLayout.setError("请输入用户名");
+            return false;
+        }
         if (password.isEmpty()) {
-            // 密码长度验证示例（可根据需求调整）
-            if (password.length() < 6) {
-                passwordTextInputLayout.setError("密码错误");
-                return false;
-            }
-
-            // 用户名验证
-            if (username.isEmpty()) {
-                usernameTextInputLayout.setError("请输入用户名");
-                return false;
-            }
             passwordTextInputLayout.setError("请输入密码");
             return false;
         }
 
-
-
-
         // 所有验证通过
         return true;
     }
+
+    private boolean checkLogin() {
+        passwordTextInputLayout.setError(null);
+        String username = usernameEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+
+        List<UserInfo> userList = userDB.querydata(null);
+        for (UserInfo user : userList) {
+            if (user.getUsername().equals(username) && user.getPaswd().equals(password)) {
+                return true;
+            }
+        }
+        passwordTextInputLayout.setError("密码或用户名错误");
+        return false;
+    }
+
 }
 

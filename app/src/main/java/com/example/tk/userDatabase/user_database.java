@@ -1,10 +1,12 @@
-package com.example.tk;
+package com.example.tk.userDatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.tk.dao.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;

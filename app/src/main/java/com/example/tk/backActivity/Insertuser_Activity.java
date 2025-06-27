@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.backActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.tk.R;
+import com.example.tk.userDatabase.user_database;
 
 public class Insertuser_Activity extends Activity {
     private EditText name_edit,paswd_edit;

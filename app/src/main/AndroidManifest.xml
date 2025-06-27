@@ -23,28 +23,28 @@
         </activity>
 
         <activity
-            android:name=".Sea_deluser_Activity"
+            android:name=".backActivity.Sea_deluser_Activity"
             android:label="用户ME界面"
-            android:parentActivityName=".starActivity"
+            android:parentActivityName=".backActivity.starActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name=".Insertuser_Activity"
+            android:name=".backActivity.Insertuser_Activity"
             android:label="用户ME界面"
             android:parentActivityName=".MainActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name=".starActivity"
+            android:name=".backActivity.starActivity"
             android:label="用户ME界面"
             android:parentActivityName=".MainActivity"
             android:exported="false">
         </activity>
         <!-- 用户主界面Activity -->
         <activity
-            android:name=".UserMainActivity"
+            android:name=".activity.UserMainActivity"
             android:label="用户主界面"
             android:parentActivityName=".MainActivity"
             android:exported="false">
@@ -52,40 +52,40 @@
 
         <!-- 用户me界面Activity -->
         <activity
-            android:name=".UserMainMeActivity"
+            android:name=".activity.UserMainMeActivity"
             android:label="用户ME界面"
-            android:parentActivityName=".UserMainActivity"
+            android:parentActivityName=".activity.UserMainActivity"
             android:exported="false">
         </activity>
 
         <!-- 用户message界面Activity -->
         <activity
-            android:name=".UserMainMessageActivity"
+            android:name=".activity.UserMainMessageActivity"
             android:label="用户message界面"
-            android:parentActivityName=".UserMainActivity"
+            android:parentActivityName=".activity.UserMainActivity"
             android:exported="false">
         </activity>
 
         <!-- 用户new界面Activity -->
         <activity
-            android:name=".UserMainNewActivity"
+            android:name=".activity.UserMainNewActivity"
             android:label="用户new界面"
-            android:parentActivityName=".UserMainActivity"
+            android:parentActivityName=".activity.UserMainActivity"
             android:exported="false">
         </activity>
 
         <!-- 用户Login界面Activity -->
         <activity
-            android:name=".SignupActivity"
+            android:name=".SignLog.SignupActivity"
             android:label="用户signup界面"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".SignLog.LoginActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".SignLog.LoginActivity"
             android:label="用户login界面"
-            android:parentActivityName=".UserMainMeActivity"
+            android:parentActivityName=".activity.UserMainMeActivity"
             android:exported="false">
         </activity>
 

@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,18 +7,20 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class UserMainMeActivity extends AppCompatActivity{
+import com.example.tk.R;
+
+public class UserMainMessageActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_me_layout);
+        setContentView(R.layout.main_message_layout);
 
-        LinearLayout messageView = findViewById(R.id.linearLayout2);
+        LinearLayout messageView = findViewById(R.id.linearLayout1);
         messageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainMeActivity.this, UserMainMessageActivity.class);
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
@@ -29,29 +31,20 @@ public class UserMainMeActivity extends AppCompatActivity{
         newView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainMeActivity.this, UserMainNewActivity.class);
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainNewActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
             }
         });
-        LinearLayout meView = findViewById(R.id.linearLayout1);
+        LinearLayout meView = findViewById(R.id.linearLayout4);
         meView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserMainMeActivity.this, UserMainActivity.class);
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainMeActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
-            }
-        });
-
-        LinearLayout loginView = findViewById(R.id.login);
-        loginView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserMainMeActivity.this, LoginActivity.class);
-                startActivity(intent);
             }
         });
     }

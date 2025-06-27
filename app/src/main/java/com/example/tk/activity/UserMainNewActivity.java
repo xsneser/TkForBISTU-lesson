@@ -1,4 +1,4 @@
-package com.example.tk;
+package com.example.tk.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.tk.R;
 
 public class UserMainNewActivity extends AppCompatActivity{
 
