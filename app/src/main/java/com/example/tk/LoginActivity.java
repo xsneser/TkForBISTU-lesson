@@ -40,11 +40,12 @@ public class LoginActivity extends AppCompatActivity{
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 验证密码一致性
+
                 if (validatePasswords()) {
                     // 密码一致，进行注册逻辑
+
+
                     Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
-                    // 这里可以添加实际的注册逻辑，如调用API
                 }
             }
         });
