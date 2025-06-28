@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.tk.dao.FriendInfo;
 import com.example.tk.dao.TaskInfo;
+import com.example.tk.dao.MessageInfo;
 import com.example.tk.dao.UserInfo;
 
 import java.util.ArrayList;
@@ -15,19 +16,16 @@ import java.util.List;
 
 public class user_database extends SQLiteOpenHelper {
 
-    // 用户表定义
     public static final String TABLE_USER = "user";
     public static final String COLUMN_USER_ID = "id";
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
 
-    // 好友表定义
     public static final String TABLE_FRIEND = "friend";
     public static final String COLUMN_FRIEND_ID = "id";
     public static final String COLUMN_FRIEND_USERNAME = "username";
     public static final String COLUMN_FRIEND_FRIENDNAME = "friendname";
 
-    // 消息表定义
     public static final String TABLE_MESSAGE = "message";
     public static final String COLUMN_MESSAGE_ID = "id";
     public static final String COLUMN_MESSAGE_SENDER = "sender";
@@ -51,13 +49,11 @@ public class user_database extends SQLiteOpenHelper {
             COLUMN_USER_USERNAME + " TEXT NOT NULL, " +
             COLUMN_USER_PASSWORD + " TEXT NOT NULL);";
 
-    // 创建好友表的SQL语句
     private static final String CREATE_TABLE_FRIEND = "CREATE TABLE " + TABLE_FRIEND + " (" +
             COLUMN_FRIEND_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_FRIEND_USERNAME + " TEXT NOT NULL, " +
             COLUMN_FRIEND_FRIENDNAME + " TEXT NOT NULL);";
 
-    // 创建消息表的SQL语句
     private static final String CREATE_TABLE_MESSAGE = "CREATE TABLE " + TABLE_MESSAGE + " (" +
             COLUMN_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_MESSAGE_SENDER + " TEXT NOT NULL, " +
@@ -96,15 +92,8 @@ public class user_database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASK); // 删除任务表
         onCreate(db);
     }
-
-    // 用户信息实例（用于好友表操作）
     UserInfo ui = new UserInfo();
-
-    // ===================== 好友表操作方法 =====================
-    /**
-     * 添加好友
-     */
-    public void add_f(SQLiteDatabase sqLiteDatabase, String fn) {
+    public void add_f(SQLiteDatabase sqLiteDatabase, String fn){
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -114,12 +103,9 @@ public class user_database extends SQLiteOpenHelper {
         } finally {
             db.close();
         }
-    }
 
-    /**
-     * 删除好友
-     */
-    public void delete_f(SQLiteDatabase sqLiteDatabase, int id) {
+    }
+    public void delete_f(SQLiteDatabase sqLiteDatabase, int id){
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.delete(TABLE_FRIEND, "id=?", new String[]{String.valueOf(id)});
@@ -127,11 +113,7 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
-
-    /**
-     * 更新好友信息
-     */
-    public void up_f(int id, String un, String fn) {
+    public void up_f(int id, String un, String fn){
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -142,10 +124,6 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
-
-    /**
-     * 查询所有好友
-     */
     public List<FriendInfo> query_f(SQLiteDatabase sqLiteDatabase) {
         List<FriendInfo> list = new ArrayList<>();
         SQLiteDatabase db = null;
@@ -154,8 +132,10 @@ public class user_database extends SQLiteOpenHelper {
             db = getReadableDatabase();
             cursor = db.query(TABLE_FRIEND, null, null, null, null, null, "id ASC");
 
+            // 检查Cursor是否有效
             if (cursor != null && cursor.moveToFirst()) {
                 do {
+                    // 检查列索引是否有效
                     int idIndex = cursor.getColumnIndex(COLUMN_FRIEND_ID);
                     int usernameIndex = cursor.getColumnIndex(COLUMN_FRIEND_USERNAME);
                     int friendIndex = cursor.getColumnIndex(COLUMN_FRIEND_FRIENDNAME);
@@ -171,6 +151,7 @@ public class user_database extends SQLiteOpenHelper {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            // 确保资源关闭
             if (cursor != null) {
                 cursor.close();
             }
@@ -181,11 +162,59 @@ public class user_database extends SQLiteOpenHelper {
         return list;
     }
 
-    // ===================== 用户表操作方法 =====================
-    /**
-     * 添加用户
-     */
-    public void adddata(SQLiteDatabase sqLiteDatabase, String username, String paswd) {
+    public void insertMessage(String sender, String receiver, String content, String timestamp) {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_MESSAGE_SENDER, sender);
+            values.put(COLUMN_MESSAGE_RECEIVER, receiver);
+            values.put(COLUMN_MESSAGE_CONTENT, content);
+            values.put(COLUMN_MESSAGE_TIMESTAMP, timestamp);
+            db.insert(TABLE_MESSAGE, null, values);
+        } finally {
+            db.close();
+        }
+    }
+
+    public List<MessageInfo> queryMessages(String sender, String receiver) {
+        List<MessageInfo> list = new ArrayList<>();
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        try {
+            db = getReadableDatabase();
+            cursor = db.query(TABLE_MESSAGE, null, COLUMN_MESSAGE_SENDER + "=? AND " + COLUMN_MESSAGE_RECEIVER + "=? OR " + COLUMN_MESSAGE_SENDER + "=? AND " + COLUMN_MESSAGE_RECEIVER + "=?",
+                    new String[]{sender, receiver, receiver, sender}, null, null, COLUMN_MESSAGE_TIMESTAMP + " ASC");
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int idIndex = cursor.getColumnIndex(COLUMN_MESSAGE_ID);
+                int senderIndex = cursor.getColumnIndex(COLUMN_MESSAGE_SENDER);
+                int receiverIndex = cursor.getColumnIndex(COLUMN_MESSAGE_RECEIVER);
+                int contentIndex = cursor.getColumnIndex(COLUMN_MESSAGE_CONTENT);
+                int timestampIndex = cursor.getColumnIndex(COLUMN_MESSAGE_TIMESTAMP);
+
+                do {
+                    int id = cursor.getInt(idIndex);
+                    String messageSender = cursor.getString(senderIndex);
+                    String messageReceiver = cursor.getString(receiverIndex);
+                    String messageContent = cursor.getString(contentIndex);
+                    String messageTimestamp = cursor.getString(timestampIndex);
+                    list.add(new MessageInfo(id, messageSender, messageReceiver, messageContent, messageTimestamp));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return list;
+    }
+
+    public void adddata(SQLiteDatabase sqLiteDatabase, String username, String paswd) { // 修正参数名拼写
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -197,9 +226,6 @@ public class user_database extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * 删除用户
-     */
     public void delete(SQLiteDatabase sqLiteDatabase, int id) {
         SQLiteDatabase db = getWritableDatabase();
         try {
@@ -209,9 +235,6 @@ public class user_database extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * 更新用户信息
-     */
     public void update(int id, String username, String paswd) {
         SQLiteDatabase db = getWritableDatabase();
         try {
@@ -224,9 +247,6 @@ public class user_database extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * 查询所有用户
-     */
     public List<UserInfo> querydata(SQLiteDatabase sqLiteDatabase) {
         List<UserInfo> list = new ArrayList<>();
         SQLiteDatabase db = null;
@@ -235,8 +255,10 @@ public class user_database extends SQLiteOpenHelper {
             db = getReadableDatabase();
             cursor = db.query("user", null, null, null, null, null, "id ASC");
 
+            // 检查Cursor是否有效
             if (cursor != null && cursor.moveToFirst()) {
                 do {
+                    // 检查列索引是否有效
                     int idIndex = cursor.getColumnIndex(COLUMN_USER_ID);
                     int usernameIndex = cursor.getColumnIndex(COLUMN_USER_USERNAME);
                     int paswdIndex = cursor.getColumnIndex(COLUMN_USER_PASSWORD);

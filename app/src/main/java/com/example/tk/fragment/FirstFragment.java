@@ -7,19 +7,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.tk.adapter.FriendAdapter;
+import com.example.tk.dao.FriendInfo;
 import com.example.tk.databinding.FragmentFirstBinding;
 
 import com.example.tk.R;
+import com.example.tk.userDatabase.user_database;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirstFragment extends Fragment {
 
      private FragmentFirstBinding binding;
-    private Button buttona;
+    private ListView lvFriends;
+    private user_database dbHelper;
+    private List<FriendInfo> friendsList;
 
     @Override
     public View onCreateView(
@@ -35,21 +46,30 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        buttona = view.findViewById(R.id.buttona);
+        lvFriends = view.findViewById(R.id.lv);
+        dbHelper = new user_database(getContext());
+        friendsList = new ArrayList<>();
 
         binding.buttonFirst.setOnClickListener(v ->
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_firstFragment_to_secondFragment)
         );
 
-//        buttona.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), MainActivity2.class);
-//                startActivity(intent);
-//            }
-//        });
+        List<FriendInfo> friendInfos = dbHelper.query_f(null);
+        friendsList.addAll(friendInfos);
+
+        // 设置适配器
+        FriendAdapter friendAdapter = new FriendAdapter(getContext(), friendsList);
+        lvFriends.setAdapter(friendAdapter);
+
+        // 设置点击事件
+        lvFriends.setOnItemClickListener((parent, view1, position, id) -> {
+            FriendInfo selectedFriend = friendsList.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putString("friend_name", selectedFriend.getFriendname());
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_firstFragment_to_secondFragment, bundle);
+        });
     }
 
     @Override
