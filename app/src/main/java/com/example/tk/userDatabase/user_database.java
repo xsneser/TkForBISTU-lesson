@@ -47,7 +47,7 @@ public class user_database extends SQLiteOpenHelper {
 
     // 创建用户表的SQL语句
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + " (" +
-            COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_USER_ID + " TEXT PRIMARY KEY, " +
             COLUMN_USER_USERNAME + " TEXT NOT NULL, " +
             COLUMN_USER_PASSWORD + " TEXT NOT NULL);";
 
@@ -115,8 +115,13 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public void updatePrimaryKey(SQLiteDatabase db, String oldId, String newId) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_ID, newId);
 
-    /**
+        // 注意：SQLite默认禁止更新主键，但WITHOUT ROWID表允许
+        db.update(TABLE_USER, values, COLUMN_USER_ID + "=?", new String[]{oldId});
+    }    /**
      * 删除好友
      */
     public void delete_f(SQLiteDatabase sqLiteDatabase, int id) {
@@ -189,6 +194,7 @@ public class user_database extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
+            values.put(COLUMN_USER_ID, "3");
             values.put(COLUMN_USER_USERNAME, username);
             values.put(COLUMN_USER_PASSWORD, paswd);
             db.insert(TABLE_USER, null, values);
