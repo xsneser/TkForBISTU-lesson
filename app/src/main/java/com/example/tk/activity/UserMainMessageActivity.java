@@ -35,7 +35,6 @@ public class UserMainMessageActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         LinearLayout messageView = findViewById(R.id.linearLayout1);
-
         messageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
