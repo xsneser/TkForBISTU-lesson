@@ -114,12 +114,7 @@ public class user_database extends SQLiteOpenHelper {
         values.put(COLUMN_USER_ID, newId);
 
     }
-    public void delete_f(SQLiteDatabase sqLiteDatabase, int id){
-        // 注意：SQLite默认禁止更新主键，但WITHOUT ROWID表允许
-        db.update(TABLE_USER, values, COLUMN_USER_ID + "=?", new String[]{oldId});
-    }    /**
-     * 删除好友
-     */
+
     public void delete_f(SQLiteDatabase sqLiteDatabase, int id) {
         SQLiteDatabase db = getWritableDatabase();
         try {
