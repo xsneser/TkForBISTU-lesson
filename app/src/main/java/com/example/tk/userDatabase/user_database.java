@@ -17,7 +17,7 @@ import java.util.List;
 public class user_database extends SQLiteOpenHelper {
 
     // 用户表定义
-    public static final String TABLE_USER = "user";
+     public static final String TABLE_USER = "user";
     public static final String COLUMN_USER_ID = "id";
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
