@@ -33,7 +33,7 @@ public class FriendInfo {
     @Override
     public String toString() {
         return "FriendInfo{" +
-                "id=" + id +
+                "outmessage=" + id +
                 ", username='" + username + '\'' +
                 ", friendname='" + friendname + '\'' +
                 '}';
