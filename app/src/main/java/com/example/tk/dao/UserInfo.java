@@ -1,6 +1,6 @@
 package com.example.tk.dao;
 
-public class UserInfo {
+public class  UserInfo {
     private int id;
     private String username;
     private String paswd;
