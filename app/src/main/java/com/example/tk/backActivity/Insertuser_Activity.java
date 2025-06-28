@@ -38,7 +38,8 @@ public class Insertuser_Activity extends Activity {
                 String paswd_str=paswd_edit.getText().toString();
                 user_database us_db=new user_database(Insertuser_Activity.this);
                 SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();
-                us_db.adddata(sqLiteDatabase,name_str,paswd_str);
+                String a="3";
+                us_db.adddata(sqLiteDatabase,a,name_str,paswd_str);
                 Intent intent = new Intent(Insertuser_Activity.this, Sea_deluser_Activity.class);
                 startActivity(intent);
             }

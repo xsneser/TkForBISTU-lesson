@@ -230,11 +230,11 @@ public class user_database extends SQLiteOpenHelper {
     /**
      * 添加用户
      */
-    public void adddata(SQLiteDatabase sqLiteDatabase, String username, String paswd) {
+    public void adddata(SQLiteDatabase sqLiteDatabase,String ID,String username, String paswd) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(COLUMN_USER_ID, "3");
+            values.put(COLUMN_USER_ID, ID);
             values.put(COLUMN_USER_USERNAME, username);
             values.put(COLUMN_USER_PASSWORD, paswd);
             db.insert(TABLE_USER, null, values);

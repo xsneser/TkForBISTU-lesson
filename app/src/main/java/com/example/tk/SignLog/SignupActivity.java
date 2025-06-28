@@ -122,7 +122,8 @@ public class SignupActivity extends AppCompatActivity{
 
         user_database us_db = new user_database(SignupActivity.this);
         SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();
-        us_db.adddata(sqLiteDatabase, name_str, hashedPassword);
+        String id ="13";
+        us_db.adddata(sqLiteDatabase, id,name_str, hashedPassword);
         Toast.makeText(SignupActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
         finish();
     }
@@ -130,7 +131,7 @@ public class SignupActivity extends AppCompatActivity{
     /**
      * 使用SHA-256算法对密码进行哈希（不加盐）
      * @param password 原始密码
-     * @return 哈希后的密码（十六进制字符串），出错时返回null
+     * @return 哈希后的密码（十六进制字符串），出错时返回nullid
      */
     private String hashPassword(String password) {
         try {
