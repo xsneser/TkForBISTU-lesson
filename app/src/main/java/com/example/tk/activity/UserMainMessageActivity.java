@@ -28,7 +28,6 @@ public class UserMainMessageActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = MainMessageLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
