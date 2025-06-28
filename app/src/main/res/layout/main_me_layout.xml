@@ -43,10 +43,11 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#ffffff"
+                        android:adjustViewBounds="false"
+                        android:background="#FFFFFF"
                         android:contentDescription="用户头像"
                         android:padding="10dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         app:srcCompat="@drawable/_20250627175927" />
 
                     <!-- 用户信息 -->
@@ -237,7 +238,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         app:srcCompat="@android:drawable/ic_notification_overlay"
-                        app:tint="#E53935" />
+                        />
 
                     <TextView
                         android:layout_width="0dp"
