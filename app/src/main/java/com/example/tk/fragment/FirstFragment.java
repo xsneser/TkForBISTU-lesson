@@ -18,7 +18,7 @@ import com.example.tk.R;
 
 public class FirstFragment extends Fragment {
 
-    private FragmentFirstBinding binding;
+     private FragmentFirstBinding binding;
     private Button buttona;
 
     @Override

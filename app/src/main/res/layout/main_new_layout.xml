@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <!-- 底部导航栏（保持原结构不变） -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -14,21 +14,16 @@
         android:background="@drawable/background_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:clickable="true"
             android:focusable="true"
-            android:layout_toRightOf="@id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/imageButton1"
@@ -38,15 +33,14 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:background="#00000000"
-                app:srcCompat="@android:drawable/ic_menu_agenda"
-                tools:ignore="MissingConstraints" />
+                app:srcCompat="@android:drawable/ic_menu_agenda" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
                 android:text="Main"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -54,12 +48,10 @@
             android:id="@+id/linearLayout2"
             android:clickable="true"
             android:focusable="true"
-            android:layout_toRightOf="@id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/imageButton2"
@@ -69,15 +61,14 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:background="#00000000"
-                app:srcCompat="@android:drawable/ic_dialog_email"
-                tools:ignore="MissingConstraints" />
+                app:srcCompat="@android:drawable/ic_dialog_email" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
                 android:text="Message"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -85,7 +76,6 @@
             android:id="@+id/linearLayout3"
             android:clickable="true"
             android:focusable="true"
-            android:layout_toRightOf="@id/imageButton4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -100,15 +90,14 @@
                 android:clickable="false"
                 android:focusable="false"
                 app:srcCompat="@android:drawable/ic_menu_add"
-                app:tint="#07C160"
-                tools:ignore="MissingConstraints" />
+                app:tint="#07C160" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
                 android:text="New"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -119,8 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_alignRight="@id/linearLayout">
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/imageButton4"
@@ -130,27 +118,31 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:background="#00000000"
-                app:srcCompat="@android:drawable/ic_menu_myplaces"
-                tools:ignore="MissingConstraints" />
+                app:srcCompat="@android:drawable/ic_menu_myplaces" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
                 android:text="Me"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </LinearLayout>
-
     </LinearLayout>
 
+    <!-- 中间提示区域（添加在底部导航栏上方） -->
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/loadingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="new"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="112dp" />
-
+        android:text="敬请期待"
+        android:textSize="36sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
