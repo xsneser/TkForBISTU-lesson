@@ -2,6 +2,7 @@ package com.example.tk.userDatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -97,12 +98,11 @@ public class user_database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASK); // 删除任务表
         onCreate(db);
     }
-    UserInfo ui = new UserInfo();
-    public void add_f(SQLiteDatabase sqLiteDatabase, String fn){
+    public void add_f(SQLiteDatabase sqLiteDatabase, String ui, String fn){
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(COLUMN_FRIEND_USERNAME, ui.getUsername());
+            values.put(COLUMN_FRIEND_USERNAME, ui);
             values.put(COLUMN_FRIEND_FRIENDNAME, fn);
             db.insert(TABLE_FRIEND, null, values);
         } finally {
@@ -123,11 +123,11 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
-    public void up_f(int id, String un, String fn){
+    public void up_f(int id, String ui, String fn){
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(COLUMN_FRIEND_USERNAME, ui.getUsername());
+            values.put(COLUMN_FRIEND_USERNAME, ui);
             values.put(COLUMN_FRIEND_FRIENDNAME, fn);
             db.update(TABLE_FRIEND, values, "id=?", new String[]{String.valueOf(id)});
         } finally {

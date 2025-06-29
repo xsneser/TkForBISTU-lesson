@@ -3,6 +3,7 @@ package com.example.tk.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import com.example.tk.MainActivity;
 import com.example.tk.SignLog.LoginActivity;
 import com.example.tk.backActivity.AddFriendActivity;
 import com.example.tk.backActivity.EmailActivity;
+import com.example.tk.userDatabase.user_database;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
@@ -29,12 +31,14 @@ public class UserMainMessageActivity extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private MainMessageLayoutBinding binding;
-
+    public user_database user;
+    public SQLiteDatabase sql_read;
     private boolean isLoggedIn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        user = new user_database(this);
+        sql_read = user.getReadableDatabase();
         checkLoginStatus();
         if (!isLoggedIn) {
             return;
@@ -151,5 +155,15 @@ public class UserMainMessageActivity extends AppCompatActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sql_read != null && sql_read.isOpen()) {
+            sql_read.close();
+        }
+        if (user != null) {
+            user.close();
+        }
     }
 }
