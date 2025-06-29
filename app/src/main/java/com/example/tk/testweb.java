@@ -35,7 +35,11 @@ public class testweb {
             Thread.currentThread().interrupt();
             e.printStackTrace();
         }
-        disconnect();
+        for(int i = 0; i < 1000000; i++){
+            if (i == 999999){
+                disconnect();
+            }
+        }
     }
 
     private void connectToServer() {

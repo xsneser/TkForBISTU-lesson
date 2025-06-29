@@ -3,7 +3,10 @@ package com.example.tk.fragment;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,8 @@ import com.example.tk.databinding.FragmentSecondBinding;
 import com.example.tk.testweb;
 import com.example.tk.userDatabase.user_database;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -40,6 +45,7 @@ public class SecondFragment extends Fragment {
     private MessageAdapter messageAdapter;
     private MessageAction ma;
     private ScheduledExecutorService executor;
+    private Handler handler;
 
     @Override
     public View onCreateView(
@@ -79,12 +85,22 @@ public class SecondFragment extends Fragment {
         buttonSend.setOnClickListener(v -> {
             String messageContent = etMessage.getText().toString();
             if (!messageContent.isEmpty()) {
-                dbHelper = new user_database(requireContext());
-                long timestamp = System.currentTimeMillis();
+                LocalDateTime currentTime = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    currentTime = LocalDateTime.now();
+                }
+                DateTimeFormatter formatter = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                }
+                String timestamp = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    timestamp = currentTime.format(formatter);
+                }
                 // 插入消息到数据库
-                dbHelper.insertMessage(userid, fid, messageContent, String.valueOf(timestamp));
+                dbHelper.insertMessage(userid, fid, messageContent, "["+timestamp+"]");
                 // 添加到消息列表并刷新适配器
-                messagesList.add(new MessageInfo(userid, fid, messageContent, String.valueOf(timestamp)));
+                messagesList.add(new MessageInfo(userid, fid, messageContent, "["+timestamp+"]"));
                 messageAdapter.notifyDataSetChanged();
                 testweb inmessage = new testweb();
                 inmessage.toserve("M" + fid + "|" + messageContent + "|" + userid);
@@ -99,23 +115,30 @@ public class SecondFragment extends Fragment {
 
         // 每秒执行一次接收消息的任务
         executor = Executors.newSingleThreadScheduledExecutor();
+        handler = new Handler(Looper.getMainLooper());
         executor.scheduleWithFixedDelay(() -> {
             testweb imessage = new testweb();
             imessage.toserve("R" + userid);
             String getmg = imessage.outmessage;
-            Log.i("SecondFragment",getmg);
+            Log.i("SecondFragment", getmg);
 
+            if (getmg != null && !getmg.isEmpty()) {
                 // 处理接收到的消息
                 String time = ma.getFirstLeftPipe(getmg);
                 String content = ma.getCenter(getmg);
                 String frid = ma.getContentAfterRightPipe(getmg);
-                Log.i("SecondFragment",time+" "+content+" "+frid);
+                Log.i("SecondFragment", time + " " + content + " " + frid);
 
+                // 插入消息到数据库
                 dbHelper.insertMessage(frid, userid, content, time);
-                messagesList.add(new MessageInfo(frid, userid, content, time));
-                messageAdapter.notifyDataSetChanged();
-                loadMessages(userid, fid);
 
+                // 在主线程中更新 UI
+                handler.post(() -> {
+                    messagesList.add(new MessageInfo(frid, userid, content, time));
+                    messageAdapter.notifyDataSetChanged();
+                    loadMessages(userid, fid);
+                });
+            }
         }, 0, 1, TimeUnit.SECONDS);
     }
 
