@@ -35,7 +35,7 @@ public class testweb {
             Thread.currentThread().interrupt();
             e.printStackTrace();
         }
-        disconnect();
+        //disconnect();
     }
 
     private void connectToServer() {
@@ -78,6 +78,7 @@ public class testweb {
         if (out != null) {
             out.println(message);
             System.out.println("发送消息: " + message);
+            disconnect();
         }
     }
 
