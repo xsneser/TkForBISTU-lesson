@@ -50,11 +50,6 @@ public class FirstFragment extends Fragment {
         dbHelper = new user_database(getContext());
         friendsList = new ArrayList<>();
 
-        binding.buttonFirst.setOnClickListener(v ->
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_firstFragment_to_secondFragment)
-        );
-
         List<FriendInfo> friendInfos = dbHelper.query_f(null);
         friendsList.addAll(friendInfos);
 

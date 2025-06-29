@@ -150,8 +150,8 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.tk.fragment.CalendarFragment"
-        android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_width="413dp"
+        android:layout_height="379dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -162,33 +162,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="添加计划"
+        app:layout_constraintEnd_toStartOf="@+id/delete_plan_button"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarFragment" />
 
-    <Button
-        android:id="@+id/friend_Plan_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="好友"
-        android:layout_marginStart="56dp"
-        app:layout_constraintStart_toEndOf="@+id/add_plan_button"
-        tools:layout_editor_absoluteY="332dp" />
-
+    <!-- 显示日期详情的 Fragment 容器 -->
     <Button
         android:id="@+id/delete_plan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="删除计划"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/calendarFragment" />
 
-    <!-- 显示日期详情的 Fragment 容器 -->
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.tk.fragment.DetailFragment"
-        android:layout_width="411dp"
-        android:layout_height="273dp"
+        android:layout_width="413dp"
+        android:layout_height="217dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

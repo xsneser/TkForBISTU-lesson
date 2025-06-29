@@ -106,7 +106,6 @@ public class UserMainMessageActivity extends AppCompatActivity{
         if (!isLoggedIn) {
             showLoginDialog();  // 显示未登录弹窗
         }
-
     }
     private void showLoginDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

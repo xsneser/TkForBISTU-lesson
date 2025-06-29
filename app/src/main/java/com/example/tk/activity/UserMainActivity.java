@@ -33,17 +33,6 @@ public class UserMainActivity extends AppCompatActivity implements CalendarFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-        Button btnJump = findViewById(R.id.friend_Plan_button);
-
-        btnJump.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 创建Intent对象，指定当前Activity和目标Activity
-                Intent intent = new Intent(UserMainActivity.this, FriendActivity.class);
-                startActivity(intent); // 启动新Activity
-            }
-        });
-
         user = new user_database(this);
         detailFragment = (DetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.detailFragment);
