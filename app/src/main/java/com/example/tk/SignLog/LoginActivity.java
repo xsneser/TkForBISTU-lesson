@@ -1,6 +1,7 @@
 package com.example.tk.SignLog;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity{
                     editor.putString("username",a);
                     editor.apply();
 
+
                     finish();
                 }
             }
@@ -117,6 +119,10 @@ public class LoginActivity extends AppCompatActivity{
         testweb inmessage = new testweb();
         inmessage.toserve("D"+ userid +"|"+hashedInputPassword);
         IsLOGIN = inmessage.outmessage;
+
+        user_database us_db=new user_database(LoginActivity.this);
+        SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();
+        us_db.adddata(sqLiteDatabase, userid ,IsLOGIN, hashedInputPassword);
 
         if(IsLOGIN!=null){
             return IsLOGIN;

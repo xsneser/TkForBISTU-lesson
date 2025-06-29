@@ -11,7 +11,7 @@ public class testweb {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private String serverIp = "10.153.115.69"; // 模拟器中访问本地主机的 IP
+    private String serverIp = "10.153.129.199"; // 模拟器中访问本地主机的 IP
     private int serverPort = 29898;
     private boolean isConnected = false;
     private CountDownLatch connectionLatch = new CountDownLatch(1);
