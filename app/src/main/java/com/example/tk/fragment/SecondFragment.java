@@ -2,9 +2,6 @@ package com.example.tk.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,14 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tk.adapter.MessageAdapter;
+import com.example.tk.backActivity.MessageAction;
 import com.example.tk.dao.MessageInfo;
 import com.example.tk.databinding.FragmentSecondBinding;
-import com.example.tk.R;
 import com.example.tk.testweb;
 import com.example.tk.userDatabase.user_database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SecondFragment extends Fragment {
 
@@ -38,7 +37,8 @@ public class SecondFragment extends Fragment {
     private user_database dbHelper;
     private List<MessageInfo> messagesList;
     private MessageAdapter messageAdapter;
-    private BroadcastReceiver messageReceiver;
+    private MessageAction ma;
+    private ScheduledExecutorService executor;
 
     @Override
     public View onCreateView(
@@ -56,7 +56,7 @@ public class SecondFragment extends Fragment {
         etMessage = binding.etMessage;
         buttonSend = binding.buttonSend;
         rvMessages = binding.rvMessages;
-
+        ma = new MessageAction();
         dbHelper = new user_database(requireContext());
         messagesList = new ArrayList<>();
         messageAdapter = new MessageAdapter(requireContext(), messagesList);
@@ -78,6 +78,7 @@ public class SecondFragment extends Fragment {
         buttonSend.setOnClickListener(v -> {
             String messageContent = etMessage.getText().toString();
             if (!messageContent.isEmpty()) {
+                dbHelper = new user_database(requireContext());
                 long timestamp = System.currentTimeMillis();
                 // 插入消息到数据库
                 dbHelper.insertMessage(userid, fid, messageContent, String.valueOf(timestamp));
@@ -93,10 +94,26 @@ public class SecondFragment extends Fragment {
         });
 
         // 查询消息记录
-
         loadMessages(fid, userid);
-        testweb imessage = new testweb();
-        String getmg = imessage.outmessage;
+
+        // 每秒执行一次接收消息的任务
+        executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleWithFixedDelay(() -> {
+            testweb imessage = new testweb();
+            imessage.toserve("R" + userid);
+            String getmg = imessage.outmessage;
+
+                // 处理接收到的消息
+                String time = ma.getFirstLeftPipe(getmg);
+                String content = ma.getCenter(getmg);
+                String frid = ma.getContentAfterRightPipe(getmg);
+
+                dbHelper.insertMessage(frid, userid, content, time);
+                messagesList.add(new MessageInfo(frid, userid, content, time));
+                messageAdapter.notifyDataSetChanged();
+                loadMessages(userid, fid);
+
+        }, 0, 1, TimeUnit.SECONDS);
     }
 
     private void loadMessages(String fid, String userid) {
@@ -111,6 +128,9 @@ public class SecondFragment extends Fragment {
         super.onDestroyView();
         if (dbHelper != null) {
             dbHelper.close();
+        }
+        if (executor != null) {
+            executor.shutdownNow(); // 停止任务
         }
         binding = null;
     }

@@ -35,7 +35,7 @@ public class testweb {
             Thread.currentThread().interrupt();
             e.printStackTrace();
         }
-        //disconnect();
+        disconnect();
     }
 
     private void connectToServer() {
