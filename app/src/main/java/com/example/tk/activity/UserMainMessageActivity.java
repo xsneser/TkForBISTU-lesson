@@ -1,13 +1,19 @@
 package com.example.tk.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.tk.MainActivity;
+import com.example.tk.SignLog.LoginActivity;
 import com.example.tk.backActivity.AddFriendActivity;
 import com.example.tk.backActivity.EmailActivity;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,9 +30,15 @@ public class UserMainMessageActivity extends AppCompatActivity{
     private AppBarConfiguration appBarConfiguration;
     private MainMessageLayoutBinding binding;
 
+    private boolean isLoggedIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkLoginStatus();
+        if (!isLoggedIn) {
+            return;
+        }
         binding = MainMessageLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -80,6 +92,43 @@ public class UserMainMessageActivity extends AppCompatActivity{
                 finish();
             }
         });
+    }
+    private void checkLoginStatus() {
+
+        // 从SharedPreferences获取登录状态
+        SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
+        isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
+
+        if (!isLoggedIn) {
+            showLoginDialog();  // 显示未登录弹窗
+        }
+
+    }
+    private void showLoginDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("您尚未登录，请先登录以使用完整功能");
+        builder.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 跳转到登录页面
+                Intent intent = new Intent(UserMainMessageActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();  // 关闭当前页面
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(UserMainMessageActivity.this, UserMainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();  // 关闭当前页面
+            }
+        });
+        builder.create().show();
     }
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
