@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,11 +103,13 @@ public class SecondFragment extends Fragment {
             testweb imessage = new testweb();
             imessage.toserve("R" + userid);
             String getmg = imessage.outmessage;
+            Log.i("SecondFragment",getmg);
 
                 // 处理接收到的消息
                 String time = ma.getFirstLeftPipe(getmg);
                 String content = ma.getCenter(getmg);
                 String frid = ma.getContentAfterRightPipe(getmg);
+                Log.i("SecondFragment",time+" "+content+" "+frid);
 
                 dbHelper.insertMessage(frid, userid, content, time);
                 messagesList.add(new MessageInfo(frid, userid, content, time));
