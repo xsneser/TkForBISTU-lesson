@@ -36,8 +36,8 @@ public class testweb {
             e.printStackTrace();
         }
         for(int i = 0; i < 1000000; i++){
-            for(int p = 0; p < 1000; p++) {
-                if (i == 999999) {
+            for(int j=0;j<1000000;j++){
+                if (j == 999999){
                     disconnect();
                 }
             }

@@ -13,19 +13,19 @@
         android:id="@+id/etFriendname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Friend's Username" />
+        android:hint="好友的ID" />
 
     <Button
         android:id="@+id/btnAddFriend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Friend" />
+        android:text="添加好友" />
 
     <Button
         android:id="@+id/btnAcceptRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Accept Friend Request" />
+        android:text="同意好友请求" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFriendRequests"
