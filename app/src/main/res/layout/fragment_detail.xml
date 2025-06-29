@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#f0f0f0"
+        android:id="@+id/tv_date_detail"
+        android:orientation="horizontal">
+
+        <!-- 左侧时间轴（固定宽度） -->
+        <TextView
+            android:id="@+id/time_axis"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:gravity="right"
+            android:textSize="14sp" />
+
+        <!-- 右侧计划内容 -->
+        <TextView
+            android:id="@+id/plan_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp" />
+    </LinearLayout>
+</ScrollView>

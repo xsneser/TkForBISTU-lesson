@@ -2,15 +2,14 @@ package com.example.tk.userDatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.tk.dao.FriendInfo;
-import com.example.tk.dao.TaskInfo;
 import com.example.tk.dao.MessageInfo;
 import com.example.tk.dao.UserInfo;
+import com.example.tk.activity.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 public class user_database extends SQLiteOpenHelper {
 
     // 用户表定义
-     public static final String TABLE_USER = "user";
+    public static final String TABLE_USER = "user";
     public static final String COLUMN_USER_ID = "id";
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
@@ -37,19 +36,16 @@ public class user_database extends SQLiteOpenHelper {
     public static final String COLUMN_MESSAGE_CONTENT = "content";
     public static final String COLUMN_MESSAGE_TIMESTAMP = "timestamp";
 
-    // 任务表定义（新增）
-    public static final String TABLE_TASK = "task";
-    public static final String COLUMN_TASK_DATE = "date";
-    public static final String COLUMN_TASK_ID = "task_id";
-    public static final String COLUMN_TASK_START_TIME = "start_time";
-    public static final String COLUMN_TASK_END_TIME = "end_time";
-    public static final String COLUMN_TASK_NAME = "task_name";
-    public static final String COLUMN_TASK_CREATOR = "creator";
-    public static final String COLUMN_TASK_CREATOR_ID = "creator_id";
+    // 计划表定义
+    public static final String TABLE_PLAN = "plans";
+    public static final String COLUMN_PLAN_ID = "id";
+    public static final String COLUMN_PLAN_DATE = "date";
+    public static final String COLUMN_PLAN_TIME = "time";
+    public static final String COLUMN_PLAN_CONTENT = "content";
 
     // 创建用户表的SQL语句
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + " (" +
-            COLUMN_USER_ID + " TEXT PRIMARY KEY, " +
+            COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_USER_USERNAME + " TEXT NOT NULL, " +
             COLUMN_USER_PASSWORD + " TEXT NOT NULL);";
 
@@ -67,15 +63,12 @@ public class user_database extends SQLiteOpenHelper {
             COLUMN_MESSAGE_CONTENT + " TEXT NOT NULL, " +
             COLUMN_MESSAGE_TIMESTAMP + " TEXT NOT NULL);";
 
-    // 创建任务表的SQL语句（新增）
-    private static final String CREATE_TABLE_TASK = "CREATE TABLE " + TABLE_TASK + " (" +
-            COLUMN_TASK_DATE + " TEXT NOT NULL, " +
-            COLUMN_TASK_ID + " TEXT NOT NULL UNIQUE, " +
-            COLUMN_TASK_START_TIME + " TEXT NOT NULL, " +
-            COLUMN_TASK_END_TIME + " TEXT NOT NULL, " +
-            COLUMN_TASK_NAME + " TEXT NOT NULL, " +
-            COLUMN_TASK_CREATOR + " TEXT NOT NULL, " +
-            COLUMN_TASK_CREATOR_ID + " INTEGER NOT NULL);";
+    // 创建计划表的SQL语句
+    private static final String CREATE_TABLE_PLAN = "CREATE TABLE " + TABLE_PLAN + " (" +
+            COLUMN_PLAN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_PLAN_DATE + " TEXT NOT NULL, " +
+            COLUMN_PLAN_TIME + " TEXT NOT NULL, " +
+            COLUMN_PLAN_CONTENT + " TEXT NOT NULL);";
 
     // 构造函数
     public user_database(Context context) {
@@ -87,7 +80,7 @@ public class user_database extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_FRIEND);
         db.execSQL(CREATE_TABLE_MESSAGE);
-        db.execSQL(CREATE_TABLE_TASK); // 创建任务表
+        db.execSQL(CREATE_TABLE_PLAN);
     }
 
     @Override
@@ -95,10 +88,12 @@ public class user_database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIEND);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASK); // 删除任务表
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAN);
         onCreate(db);
     }
-    public void add_f(SQLiteDatabase sqLiteDatabase, String ui, String fn){
+
+    // ===================== 好友表操作方法 =====================
+    public void add_f(SQLiteDatabase sqLiteDatabase, String ui, String fn) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -109,10 +104,10 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
+
     public void updatePrimaryKey(SQLiteDatabase db, String oldId, String newId) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_ID, newId);
-
     }
 
     public void delete_f(SQLiteDatabase sqLiteDatabase, int id) {
@@ -123,7 +118,8 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
-    public void up_f(int id, String ui, String fn){
+
+    public void up_f(int id, String ui, String fn) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -163,7 +159,6 @@ public class user_database extends SQLiteOpenHelper {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 确保资源关闭
             if (cursor != null) {
                 cursor.close();
             }
@@ -174,6 +169,7 @@ public class user_database extends SQLiteOpenHelper {
         return list;
     }
 
+    // ===================== 消息表操作方法 =====================
     public void insertMessage(String sender, String receiver, String content, String timestamp) {
         SQLiteDatabase db = getWritableDatabase();
         try {
@@ -194,7 +190,9 @@ public class user_database extends SQLiteOpenHelper {
         Cursor cursor = null;
         try {
             db = getReadableDatabase();
-            cursor = db.query(TABLE_MESSAGE, null, COLUMN_MESSAGE_SENDER + "=? AND " + COLUMN_MESSAGE_RECEIVER + "=? OR " + COLUMN_MESSAGE_SENDER + "=? AND " + COLUMN_MESSAGE_RECEIVER + "=?",
+            cursor = db.query(TABLE_MESSAGE, null,
+                    COLUMN_MESSAGE_SENDER + "=? AND " + COLUMN_MESSAGE_RECEIVER + "=? OR " +
+                            COLUMN_MESSAGE_SENDER + "=? AND " + COLUMN_MESSAGE_RECEIVER + "=?",
                     new String[]{sender, receiver, receiver, sender}, null, null, COLUMN_MESSAGE_TIMESTAMP + " ASC");
 
             if (cursor != null && cursor.moveToFirst()) {
@@ -230,7 +228,7 @@ public class user_database extends SQLiteOpenHelper {
     /**
      * 添加用户
      */
-    public void adddata(SQLiteDatabase sqLiteDatabase,String ID,String username, String paswd) {
+    public void adddata(SQLiteDatabase sqLiteDatabase, String ID, String username, String paswd) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -275,10 +273,8 @@ public class user_database extends SQLiteOpenHelper {
             db = getReadableDatabase();
             cursor = db.query("user", null, null, null, null, null, "id ASC");
 
-            // 检查Cursor是否有效
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    // 检查列索引是否有效
                     int idIndex = cursor.getColumnIndex(COLUMN_USER_ID);
                     int usernameIndex = cursor.getColumnIndex(COLUMN_USER_USERNAME);
                     int paswdIndex = cursor.getColumnIndex(COLUMN_USER_PASSWORD);
@@ -304,93 +300,64 @@ public class user_database extends SQLiteOpenHelper {
         return list;
     }
 
-    // ===================== 任务表操作方法（新增） =====================
+    // ===================== 计划表操作方法 =====================
     /**
-     * 添加任务
+     * 添加计划
      */
-    public void addTask(SQLiteDatabase sqLiteDatabase, String date, String taskId,
-                        String startTime, String endTime, String taskName,
-                        String creator, int creatorId) {
+// user_database.java
+    public void addPlan(SQLiteDatabase sqLiteDatabase, String date, String time, String content) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(COLUMN_TASK_DATE, date);
-            values.put(COLUMN_TASK_ID, taskId);
-            values.put(COLUMN_TASK_START_TIME, startTime);
-            values.put(COLUMN_TASK_END_TIME, endTime);
-            values.put(COLUMN_TASK_NAME, taskName);
-            values.put(COLUMN_TASK_CREATOR, creator);
-            values.put(COLUMN_TASK_CREATOR_ID, creatorId);
-            db.insert(TABLE_TASK, null, values);
+            values.put(COLUMN_PLAN_DATE, date);
+            values.put(COLUMN_PLAN_TIME, time);
+            values.put(COLUMN_PLAN_CONTENT, content);
+            db.insert(TABLE_PLAN, null, values);
         } finally {
             db.close();
         }
     }
-
     /**
-     * 删除任务
+     * 删除计划
      */
-    public void deleteTask(SQLiteDatabase sqLiteDatabase, String taskId) {
+    public void deletePlan(int id) {
         SQLiteDatabase db = getWritableDatabase();
         try {
-            db.delete(TABLE_TASK, COLUMN_TASK_ID + "=?", new String[]{taskId});
+            db.delete(TABLE_PLAN, "id=?", new String[]{String.valueOf(id)});
         } finally {
             db.close();
         }
     }
 
     /**
-     * 更新任务信息
+     * 查询指定日期的计划
      */
-    public void updateTask(String taskId, String date, String startTime,
-                           String endTime, String taskName, String creator, int creatorId) {
-        SQLiteDatabase db = getWritableDatabase();
-        try {
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_TASK_DATE, date);
-            values.put(COLUMN_TASK_START_TIME, startTime);
-            values.put(COLUMN_TASK_END_TIME, endTime);
-            values.put(COLUMN_TASK_NAME, taskName);
-            values.put(COLUMN_TASK_CREATOR, creator);
-            values.put(COLUMN_TASK_CREATOR_ID, creatorId);
-            db.update(TABLE_TASK, values, COLUMN_TASK_ID + "=?", new String[]{taskId});
-        } finally {
-            db.close();
-        }
-    }
-
+    // user_database.java
+    // user_database.java
     /**
-     * 查询所有任务
+     * 查询指定日期的计划
      */
-    public List<TaskInfo> queryAllTasks(SQLiteDatabase sqLiteDatabase) {
-        List<TaskInfo> list = new ArrayList<>();
+    public List<Plan> queryPlansByDate(String date) {
+        List<Plan> list = new ArrayList<>();
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
             db = getReadableDatabase();
-            cursor = db.query(TABLE_TASK, null, null, null, null, null, COLUMN_TASK_DATE + " DESC");
+            cursor = db.query(TABLE_PLAN, null, COLUMN_PLAN_DATE + "=?", new String[]{date}, null, null, "id ASC");
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    int dateIndex = cursor.getColumnIndex(COLUMN_TASK_DATE);
-                    int taskIdIndex = cursor.getColumnIndex(COLUMN_TASK_ID);
-                    int startTimeIndex = cursor.getColumnIndex(COLUMN_TASK_START_TIME);
-                    int endTimeIndex = cursor.getColumnIndex(COLUMN_TASK_END_TIME);
-                    int taskNameIndex = cursor.getColumnIndex(COLUMN_TASK_NAME);
-                    int creatorIndex = cursor.getColumnIndex(COLUMN_TASK_CREATOR);
-                    int creatorIdIndex = cursor.getColumnIndex(COLUMN_TASK_CREATOR_ID);
+                    int idIndex = cursor.getColumnIndex(COLUMN_PLAN_ID);
+                    int dateIndex = cursor.getColumnIndex(COLUMN_PLAN_DATE);
+                    int timeIndex = cursor.getColumnIndex(COLUMN_PLAN_TIME);
+                    int contentIndex = cursor.getColumnIndex(COLUMN_PLAN_CONTENT);
 
-                    if (dateIndex != -1 && taskIdIndex != -1 && startTimeIndex != -1 &&
-                            endTimeIndex != -1 && taskNameIndex != -1 && creatorIndex != -1 &&
-                            creatorIdIndex != -1) {
-                        String date = cursor.getString(dateIndex);
-                        String taskId = cursor.getString(taskIdIndex);
-                        String startTime = cursor.getString(startTimeIndex);
-                        String endTime = cursor.getString(endTimeIndex);
-                        String taskName = cursor.getString(taskNameIndex);
-                        String creator = cursor.getString(creatorIndex);
-                        int creatorId = cursor.getInt(creatorIdIndex);
-                        list.add(new TaskInfo(date, taskId, startTime, endTime, taskName, creator, creatorId));
+                    if (idIndex != -1 && dateIndex != -1 && timeIndex != -1 && contentIndex != -1) {
+                        int id = cursor.getInt(idIndex);
+                        String planDate = cursor.getString(dateIndex);
+                        String time = cursor.getString(timeIndex);
+                        String content = cursor.getString(contentIndex);
+                        list.add(new Plan(id, planDate, time, content));
                     }
                 } while (cursor.moveToNext());
             }
@@ -407,53 +374,4 @@ public class user_database extends SQLiteOpenHelper {
         return list;
     }
 
-    /**
-     * 根据创建人ID查询任务
-     */
-    public List<TaskInfo> queryTasksByCreatorId(SQLiteDatabase sqLiteDatabase, int creatorId) {
-        List<TaskInfo> list = new ArrayList<>();
-        SQLiteDatabase db = null;
-        Cursor cursor = null;
-        try {
-            db = getReadableDatabase();
-            cursor = db.query(TABLE_TASK, null,
-                    COLUMN_TASK_CREATOR_ID + "=?",
-                    new String[]{String.valueOf(creatorId)},
-                    null, null, COLUMN_TASK_DATE + " DESC");
-
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    int dateIndex = cursor.getColumnIndex(COLUMN_TASK_DATE);
-                    int taskIdIndex = cursor.getColumnIndex(COLUMN_TASK_ID);
-                    int startTimeIndex = cursor.getColumnIndex(COLUMN_TASK_START_TIME);
-                    int endTimeIndex = cursor.getColumnIndex(COLUMN_TASK_END_TIME);
-                    int taskNameIndex = cursor.getColumnIndex(COLUMN_TASK_NAME);
-                    int creatorIndex = cursor.getColumnIndex(COLUMN_TASK_CREATOR);
-                    int creatorIdIndex = cursor.getColumnIndex(COLUMN_TASK_CREATOR_ID);
-
-                    if (dateIndex != -1 && taskIdIndex != -1 && startTimeIndex != -1 &&
-                            endTimeIndex != -1 && taskNameIndex != -1 && creatorIndex != -1 &&
-                            creatorIdIndex != -1) {
-                        String date = cursor.getString(dateIndex);
-                        String taskId = cursor.getString(taskIdIndex);
-                        String startTime = cursor.getString(startTimeIndex);
-                        String endTime = cursor.getString(endTimeIndex);
-                        String taskName = cursor.getString(taskNameIndex);
-                        String creator = cursor.getString(creatorIndex);
-                        list.add(new TaskInfo(date, taskId, startTime, endTime, taskName, creator, creatorId));
-                    }
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            if (db != null) {
-                db.close();
-            }
-        }
-        return list;
-    }
 }

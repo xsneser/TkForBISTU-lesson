@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 原有的布局元素 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="计划内容:"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/et_plan_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="4"
+        android:gravity="top"
+        android:hint="请输入计划内容"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日期:"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_selected_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="选择日期"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="#e0e0e0"
+            android:layout_marginLeft="16dp"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间:"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_selected_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="选择时间"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="#e0e0e0"
+            android:layout_marginLeft="16dp"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_send_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加计划"
+        android:textSize="18sp"
+        android:background="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="24dp"/>
+
+    <!-- 新增：用于显示添加的计划信息 -->
+    <TextView
+        android:id="@+id/tv_added_plan_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#f0f0f0"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

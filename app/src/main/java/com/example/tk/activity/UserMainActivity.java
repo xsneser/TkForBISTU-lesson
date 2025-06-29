@@ -1,12 +1,7 @@
 package com.example.tk.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,36 +9,76 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.tk.fragment.CalendarFragment;
+import com.example.tk.fragment.DetailFragment;
 import com.example.tk.R;
-import com.example.tk.SignLog.LoginActivity;
+import androidx.annotation.Nullable;
 import com.example.tk.backActivity.Insertuser_Activity;
 import com.example.tk.SignLog.Sea_deluser_Activity;
 import com.example.tk.userDatabase.user_database;
+import com.example.tk.activity.Plan;
 
-public class UserMainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class UserMainActivity extends AppCompatActivity implements CalendarFragment.OnDateSelectedListener {
     public user_database user;
-    public SQLiteDatabase sql_read;
-    private Button search_del_btn, insert_btn, updata_bin;
-
-    public boolean isLoggedIn;
+    private DetailFragment detailFragment;
+    private Button addPlanButton;
+    private Button deletePlanButton;
+    private String currentDate; // 记录当前选中的日期
+    private static final int ADD_PLAN_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.main_layout);
+
+        Button btnJump = findViewById(R.id.friend_Plan_button);
+
+        btnJump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 创建Intent对象，指定当前Activity和目标Activity
+                Intent intent = new Intent(UserMainActivity.this, FriendActivity.class);
+                startActivity(intent); // 启动新Activity
+            }
+        });
+
         user = new user_database(this);
-        sql_read = user.getReadableDatabase();
+        detailFragment = (DetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.detailFragment);
 
-        // UserMainActivity 的逻辑
-        setupLinearLayoutClickListeners();
+        // 添加和删除计划的按钮
+        addPlanButton = findViewById(R.id.add_plan_button);
+        deletePlanButton = findViewById(R.id.delete_plan_button);
 
-        // starActivity 的逻辑
-        init();
-    }
+        addPlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentDate != null) {
+                    // 跳转到添加计划页面，并传递当前日期
+                    Intent intent = new Intent(UserMainActivity.this, AddPlanActivity.class);
+                    intent.putExtra("date", currentDate);
+                    startActivityForResult(intent, ADD_PLAN_REQUEST_CODE);
+                } else {
+                    Toast.makeText(UserMainActivity.this, "请先选择日期", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-    private void setupLinearLayoutClickListeners() {
+        deletePlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentDate != null) {
+                    // 跳转到删除计划页面，并传递当前日期
+                    Intent intent = new Intent(UserMainActivity.this, DeletePlanActivity.class);
+                    intent.putExtra("date", currentDate);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(UserMainActivity.this, "请先选择日期", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         LinearLayout messageView = findViewById(R.id.linearLayout2);
         messageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,53 +111,64 @@ public class UserMainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        // 日历选择监听器
+        CalendarFragment calendarFragment = (CalendarFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.calendarFragment);
+        calendarFragment.setOnDateSelectedListener(this);
     }
 
-    public void init() {
-        // 初始化按钮
-        search_del_btn = findViewById(R.id.search_delete);
-        insert_btn = findViewById(R.id.add);
-        updata_bin = findViewById(R.id.update);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_PLAN_REQUEST_CODE && resultCode == RESULT_OK) {
+            // 获取返回的日期
+            if (data != null && data.hasExtra("date")) {
+                currentDate = data.getStringExtra("date");
+                // 重新加载当天的计划
+                String plan = getPlanFromDatabase(currentDate);
+                Log.d("UserMainActivity", "重新加载的计划内容: " + plan);
 
-        // 为“查询/删除”按钮设置点击监听器
-        search_del_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(UserMainActivity.this, Sea_deluser_Activity.class);
-                    startActivity(intent);
-                    // 可添加过渡动画（如需要）
-                    // overridePendingTransition(0, 0);
-                } catch (Exception e) {
-                    Log.e("CombinedActivity", "启动 Sea_deluser_Activity 时出错: ", e);
-                    Toast.makeText(UserMainActivity.this, "启动查询/删除界面失败", Toast.LENGTH_SHORT).show();
+                if (detailFragment != null) {
+                    detailFragment.updateDateDetail(currentDate, plan);
                 }
             }
-        });
+        }
+    }
 
-        // 为“添加用户信息”按钮设置点击监听器
-        insert_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(UserMainActivity.this, Insertuser_Activity.class);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e("CombinedActivity", "启动 Insertuser_Activity 时出错: ", e);
-                    Toast.makeText(UserMainActivity.this, "启动添加用户信息界面失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    public void onDateSelected(int year, int month, int dayOfMonth) {
+        // 处理日期（月份从 0 开始，所以 +1）
+        currentDate = year + "-" + (month + 1) + "-" + dayOfMonth;
 
-        // 你还可以为“修改用户信息”按钮（updata_bin）设置点击监听器，这里暂不实现
+        // 从数据库中查询当日计划
+        String plan = getPlanFromDatabase(currentDate);
+
+        // 更新 DetailFragment 的显示
+        if (detailFragment != null) {
+            detailFragment.updateDateDetail(currentDate, plan);
+        }
+    }
+
+    // 从数据库中查询当日计划
+    private String getPlanFromDatabase(String date) {
+        StringBuilder planBuilder = new StringBuilder();
+        List<Plan> plans = user.queryPlansByDate(date);
+
+        for (Plan plan : plans) {
+            planBuilder.append(plan.getTime()).append(" - ").append(plan.getContent()).append("\n\n");
+        }
+
+        if (planBuilder.length() == 0) {
+            planBuilder.append("暂无计划");
+        }
+
+        return planBuilder.toString();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (sql_read != null && sql_read.isOpen()) {
-            sql_read.close();
-        }
         if (user != null) {
             user.close();
         }

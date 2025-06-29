@@ -66,6 +66,21 @@
             android:label="用户message界面"
             android:parentActivityName=".activity.UserMainActivity" /> <!-- 用户new界面Activity -->
         <activity
+            android:name=".activity.AddPlanActivity"
+            android:exported="false"
+            android:label="用户message界面"
+            android:parentActivityName=".activity.UserMainActivity" />
+        <activity
+            android:name=".activity.FriendActivity"
+            android:exported="false"
+            android:label="好友计划"
+            android:parentActivityName=".activity.UserMainActivity" />
+        <activity
+            android:name=".activity.DeletePlanActivity"
+            android:exported="false"
+            android:label="用户message界面"
+            android:parentActivityName=".activity.UserMainActivity" />
+        <activity
             android:name=".activity.UserMainNewActivity"
             android:exported="false"
             android:label="用户new界面"
