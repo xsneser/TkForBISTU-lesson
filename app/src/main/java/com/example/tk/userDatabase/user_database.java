@@ -45,7 +45,7 @@ public class user_database extends SQLiteOpenHelper {
 
     // 创建用户表的SQL语句
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + " (" +
-            COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_USER_ID + " TEXT PRIMARY KEY , " +
             COLUMN_USER_USERNAME + " TEXT NOT NULL, " +
             COLUMN_USER_PASSWORD + " TEXT NOT NULL);";
 
