@@ -1,6 +1,7 @@
 package com.example.tk.SignLog;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.content.SharedPreferences;
 
 import com.example.tk.R;
 import com.example.tk.dao.UserInfo;
+import com.example.tk.testweb;
 import com.example.tk.userDatabase.user_database;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity{
 
     private Button registerButton;
     private user_database userDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +51,18 @@ public class LoginActivity extends AppCompatActivity{
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    int a=checkLogin();
-                if (validatePasswords()&&a!=0) {
+                    String a=checkLogin();
+                if (validatePasswords()&&a!=null) {
                     // 密码一致，进行注册逻辑
                     Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
                     // 保存登录状态和用户名
                     SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("is_logged_in", true);
-                    editor.putString("username", usernameEditText.getText().toString().trim());
-                    editor.putString("ID",String.valueOf(a));
+                    editor.putString("ID", usernameEditText.getText().toString().trim());
+                    editor.putString("username",a);
                     editor.apply();
+
 
                     finish();
                 }
@@ -99,9 +103,10 @@ public class LoginActivity extends AppCompatActivity{
         return true;
     }
 
-    private int checkLogin() {
+    private String checkLogin() {
+        String IsLOGIN;
         passwordTextInputLayout.setError(null);
-        String username = usernameEditText.getText().toString().trim();
+        String userid = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         // 对输入的密码进行哈希处理
@@ -109,20 +114,31 @@ public class LoginActivity extends AppCompatActivity{
         if (hashedInputPassword == null) {
             // 处理哈希失败的情况
             passwordTextInputLayout.setError("系统错误，请重试");
-            return 0;
+            return null;
         }
+        testweb inmessage = new testweb();
+        inmessage.toserve("D"+ userid +"|"+hashedInputPassword);
+        IsLOGIN = inmessage.outmessage;
 
+        user_database us_db=new user_database(LoginActivity.this);
+        SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();
+        us_db.adddata(sqLiteDatabase, userid ,IsLOGIN, hashedInputPassword);
+
+        if(IsLOGIN!=null){
+            return IsLOGIN;
+        }
+        /*
         List<UserInfo> userList = userDB.querydata(null);
         for (UserInfo user : userList) {
             // 比较用户名和哈希后的密码
-            if (user.getUsername().equals(username) &&
+            if (user.getUsername().equals(userid) &&
                     user.getPaswd().equals(hashedInputPassword)) {
                 return user.getId();
             }
-        }
+        }*/
 
         passwordTextInputLayout.setError("密码或用户名错误");
-        return 0;
+        return null;
     }
 
     /**

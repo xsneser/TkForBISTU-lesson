@@ -16,16 +16,19 @@ import java.util.List;
 
 public class user_database extends SQLiteOpenHelper {
 
-    public static final String TABLE_USER = "user";
+    // 用户表定义
+     public static final String TABLE_USER = "user";
     public static final String COLUMN_USER_ID = "id";
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
 
+    // 好友表定义
     public static final String TABLE_FRIEND = "friend";
     public static final String COLUMN_FRIEND_ID = "id";
     public static final String COLUMN_FRIEND_USERNAME = "username";
     public static final String COLUMN_FRIEND_FRIENDNAME = "friendname";
 
+    // 消息表定义
     public static final String TABLE_MESSAGE = "message";
     public static final String COLUMN_MESSAGE_ID = "id";
     public static final String COLUMN_MESSAGE_SENDER = "sender";
@@ -45,15 +48,17 @@ public class user_database extends SQLiteOpenHelper {
 
     // 创建用户表的SQL语句
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + " (" +
-            COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_USER_ID + " TEXT PRIMARY KEY, " +
             COLUMN_USER_USERNAME + " TEXT NOT NULL, " +
             COLUMN_USER_PASSWORD + " TEXT NOT NULL);";
 
+    // 创建好友表的SQL语句
     private static final String CREATE_TABLE_FRIEND = "CREATE TABLE " + TABLE_FRIEND + " (" +
             COLUMN_FRIEND_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_FRIEND_USERNAME + " TEXT NOT NULL, " +
             COLUMN_FRIEND_FRIENDNAME + " TEXT NOT NULL);";
 
+    // 创建消息表的SQL语句
     private static final String CREATE_TABLE_MESSAGE = "CREATE TABLE " + TABLE_MESSAGE + " (" +
             COLUMN_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_MESSAGE_SENDER + " TEXT NOT NULL, " +
@@ -103,9 +108,14 @@ public class user_database extends SQLiteOpenHelper {
         } finally {
             db.close();
         }
+    }
+    public void updatePrimaryKey(SQLiteDatabase db, String oldId, String newId) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_ID, newId);
 
     }
-    public void delete_f(SQLiteDatabase sqLiteDatabase, int id){
+
+    public void delete_f(SQLiteDatabase sqLiteDatabase, int id) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.delete(TABLE_FRIEND, "id=?", new String[]{String.valueOf(id)});
@@ -124,6 +134,10 @@ public class user_database extends SQLiteOpenHelper {
             db.close();
         }
     }
+
+    /**
+     * 查询所有好友
+     */
     public List<FriendInfo> query_f(SQLiteDatabase sqLiteDatabase) {
         List<FriendInfo> list = new ArrayList<>();
         SQLiteDatabase db = null;
@@ -132,10 +146,8 @@ public class user_database extends SQLiteOpenHelper {
             db = getReadableDatabase();
             cursor = db.query(TABLE_FRIEND, null, null, null, null, null, "id ASC");
 
-            // 检查Cursor是否有效
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    // 检查列索引是否有效
                     int idIndex = cursor.getColumnIndex(COLUMN_FRIEND_ID);
                     int usernameIndex = cursor.getColumnIndex(COLUMN_FRIEND_USERNAME);
                     int friendIndex = cursor.getColumnIndex(COLUMN_FRIEND_FRIENDNAME);
@@ -214,10 +226,15 @@ public class user_database extends SQLiteOpenHelper {
         return list;
     }
 
-    public void adddata(SQLiteDatabase sqLiteDatabase, String username, String paswd) { // 修正参数名拼写
+    // ===================== 用户表操作方法 =====================
+    /**
+     * 添加用户
+     */
+    public void adddata(SQLiteDatabase sqLiteDatabase,String ID,String username, String paswd) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
+            values.put(COLUMN_USER_ID, ID);
             values.put(COLUMN_USER_USERNAME, username);
             values.put(COLUMN_USER_PASSWORD, paswd);
             db.insert(TABLE_USER, null, values);
@@ -226,6 +243,9 @@ public class user_database extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * 删除用户
+     */
     public void delete(SQLiteDatabase sqLiteDatabase, int id) {
         SQLiteDatabase db = getWritableDatabase();
         try {

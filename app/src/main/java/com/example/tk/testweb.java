@@ -1,64 +1,41 @@
 package com.example.tk;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
 
-
-public class testweb extends AppCompatActivity {
-    private EditText messageView;
-    private EditText messageInput;
-    private Button sendButton;
+public class testweb {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private Handler handler;
-    private String serverIp = "10.153.115.69"; // 模拟器中访问本地主机的 IP
+    private String serverIp = "10.153.129.199"; // 模拟器中访问本地主机的 IP
     private int serverPort = 29898;
     private boolean isConnected = false;
+    private CountDownLatch connectionLatch = new CountDownLatch(1);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.webtest_layout);
+    public String outmessage;
 
-        messageView = findViewById(R.id.messageView);
-        messageInput = findViewById(R.id.messageInput);
-        sendButton = findViewById(R.id.sendButton);
-        handler = new Handler(Looper.getMainLooper());
+    public void toserve(String message) {
+        // 确保只连接一次
+        if (!isConnected) {
+            new Thread(this::connectToServer).start();
+        }
 
+        try {
+            // 等待连接建立
+            connectionLatch.await();
 
-        // 设置 messageView 为不可编辑
-        messageView.setKeyListener(null);
-        messageView.setFocusable(false);
-        messageView.setFocusableInTouchMode(false);
-        messageView.setEnabled(false);
-
-        // 初始化连接
-        new Thread(this::connectToServer).start();
-
-        // 发送消息按钮点击事件
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = messageInput.getText().toString().trim();
-                if (!message.isEmpty() && isConnected) {
-                    new Thread(() -> sendMessage(message)).start();
-                    messageInput.setText("");
-                }
+            if (!message.isEmpty() && isConnected) {
+                new Thread(() -> sendMessage(message)).start();
             }
-        });
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
+        disconnect();
     }
 
     private void connectToServer() {
@@ -67,14 +44,14 @@ public class testweb extends AppCompatActivity {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             isConnected = true;
-
-            updateUI("已连接到服务器");
-
+            // 连接已建立，释放等待的线程
+            connectionLatch.countDown();
             // 开始接收消息
             receiveMessages();
         } catch (IOException e) {
-            updateUI("连接失败: " + e.getMessage());
             e.printStackTrace();
+            // 连接失败，也释放等待的线程
+            connectionLatch.countDown();
         }
     }
 
@@ -83,8 +60,8 @@ public class testweb extends AppCompatActivity {
             String message;
             while ((message = in.readLine()) != null) {
                 final String finalMessage = message;
-                updateUI("服务器: " + finalMessage);
-
+                System.out.println("收到消息: " + finalMessage);
+                outmessage = finalMessage;
                 if ("再见".equalsIgnoreCase(finalMessage)) {
                     disconnect();
                     break;
@@ -92,7 +69,6 @@ public class testweb extends AppCompatActivity {
             }
         } catch (IOException e) {
             if (isConnected) {
-                updateUI("接收消息失败: " + e.getMessage());
                 disconnect();
             }
         }
@@ -101,33 +77,19 @@ public class testweb extends AppCompatActivity {
     private void sendMessage(String message) {
         if (out != null) {
             out.println(message);
-            updateUI("我: " + message);
+            System.out.println("发送消息: " + message);
         }
     }
 
-    private void disconnect() {
+    public void disconnect() {
         try {
             isConnected = false;
             if (in != null) in.close();
             if (out != null) out.close();
             if (socket != null && !socket.isClosed()) socket.close();
-            updateUI("已断开连接");
+            System.out.println("已断开连接");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void updateUI(String message) {
-        handler.post(() -> {
-            messageView.append(message + "\n");
-            // 滚动到底部
-            messageView.setSelection(messageView.getText().length());
-        });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disconnect();
     }
 }

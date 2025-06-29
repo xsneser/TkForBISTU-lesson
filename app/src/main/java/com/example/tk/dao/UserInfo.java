@@ -42,7 +42,7 @@ public class  UserInfo {
     @Override
     public String toString() {
         return "UserInfo{" +
-                "id=" + id +
+                "outmessage=" + id +
                 ", username='" + username + '\'' +
                 ", paswd='" + paswd + '\'' +
                 '}';

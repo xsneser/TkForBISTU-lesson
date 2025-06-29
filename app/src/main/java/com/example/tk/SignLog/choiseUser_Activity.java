@@ -43,6 +43,7 @@ public class choiseUser_Activity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(choiseUser_Activity.this,    LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

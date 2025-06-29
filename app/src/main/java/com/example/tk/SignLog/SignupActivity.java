@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tk.R;
+import com.example.tk.testweb;
 import com.example.tk.userDatabase.user_database;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -112,6 +113,7 @@ public class SignupActivity extends AppCompatActivity{
         EditText paswd_edit = findViewById(R.id.passwordEditText);
         String name_str = name_edit.getText().toString();
         String password = paswd_edit.getText().toString();
+        String id;
 
         // 对密码进行哈希处理
         String hashedPassword = hashPassword(password);
@@ -119,10 +121,13 @@ public class SignupActivity extends AppCompatActivity{
             Toast.makeText(this, "密码加密失败，请重试", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        testweb inmessage = new testweb();
+        inmessage.toserve("I"+name_str+"|"+hashedPassword);
+        id=inmessage.outmessage;
+        Toast.makeText(SignupActivity.this, "I"+id+"|"+hashedPassword, Toast.LENGTH_SHORT).show();
         user_database us_db = new user_database(SignupActivity.this);
         SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();
-        us_db.adddata(sqLiteDatabase, name_str, hashedPassword);
+        us_db.adddata(sqLiteDatabase, id ,name_str, hashedPassword);
         Toast.makeText(SignupActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
         finish();
     }
