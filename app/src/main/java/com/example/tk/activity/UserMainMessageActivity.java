@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.tk.backActivity.AddFriendActivity;
+import com.example.tk.backActivity.EmailActivity;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -28,13 +29,28 @@ public class UserMainMessageActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = MainMessageLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserMainMessageActivity.this, EmailActivity.class);
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAnchorView(R.id.fab)
+                        .setAction("Action", null).show();
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+            }
+        });
+
         LinearLayout messageView = findViewById(R.id.linearLayout1);
+
         messageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

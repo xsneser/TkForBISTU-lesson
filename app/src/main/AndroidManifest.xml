@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TK"
         tools:targetApi="31">
+        <activity
+            android:name=".backActivity.EmailActivity"
+            android:exported="false" />
         <activity
             android:name=".backActivity.AddFriendActivity"
             android:exported="false" />
@@ -31,52 +34,52 @@
             android:name=".SignLog.Sea_deluser_Activity"
             android:exported="false"
             android:label="用户ME界面"
-            android:parentActivityName=".backActivity.starActivity"></activity>
+            android:parentActivityName=".backActivity.starActivity" />
         <activity
             android:name=".SignLog.choiseUser_Activity"
             android:exported="false"
             android:label="用户choise界面"
-            android:parentActivityName=".backActivity.starActivity"></activity>
+            android:parentActivityName=".backActivity.starActivity" />
         <activity
             android:name=".backActivity.Insertuser_Activity"
             android:exported="false"
             android:label="用户ME界面"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".backActivity.starActivity"
             android:exported="false"
             android:label="用户ME界面"
-            android:parentActivityName=".MainActivity"></activity> <!-- 用户主界面Activity -->
+            android:parentActivityName=".MainActivity" /> <!-- 用户主界面Activity -->
         <activity
             android:name=".activity.UserMainActivity"
             android:exported="false"
             android:label="用户主界面"
-            android:parentActivityName=".MainActivity"></activity> <!-- 用户me界面Activity -->
+            android:parentActivityName=".MainActivity" /> <!-- 用户me界面Activity -->
         <activity
             android:name=".activity.UserMainMeActivity"
             android:exported="false"
             android:label="用户ME界面"
-            android:parentActivityName=".activity.UserMainActivity"></activity> <!-- 用户message界面Activity -->
+            android:parentActivityName=".activity.UserMainActivity" /> <!-- 用户message界面Activity -->
         <activity
             android:name=".activity.UserMainMessageActivity"
             android:exported="false"
             android:label="用户message界面"
-            android:parentActivityName=".activity.UserMainActivity"></activity> <!-- 用户new界面Activity -->
+            android:parentActivityName=".activity.UserMainActivity" /> <!-- 用户new界面Activity -->
         <activity
             android:name=".activity.UserMainNewActivity"
             android:exported="false"
             android:label="用户new界面"
-            android:parentActivityName=".activity.UserMainActivity"></activity> <!-- 用户Login界面Activity -->
+            android:parentActivityName=".activity.UserMainActivity" /> <!-- 用户Login界面Activity -->
         <activity
             android:name=".SignLog.SignupActivity"
             android:exported="false"
             android:label="用户signup界面"
-            android:parentActivityName=".SignLog.LoginActivity"></activity>
+            android:parentActivityName=".SignLog.LoginActivity" />
         <activity
             android:name=".SignLog.LoginActivity"
             android:exported="false"
             android:label="用户login界面"
-            android:parentActivityName=".activity.UserMainMeActivity"></activity>
+            android:parentActivityName=".activity.UserMainMeActivity" />
     </application>
 
 </manifest>
