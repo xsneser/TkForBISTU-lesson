@@ -103,7 +103,7 @@ public class SignupActivity extends AppCompatActivity{
             usernameTextInputLayout.setError("请输入用户名");
             return false;
         }
-
+ 
         // 所有验证通过
         return true;
     }

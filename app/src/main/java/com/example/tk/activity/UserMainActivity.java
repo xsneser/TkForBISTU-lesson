@@ -1,7 +1,11 @@
 package com.example.tk.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.tk.R;
+import com.example.tk.SignLog.LoginActivity;
 import com.example.tk.backActivity.Insertuser_Activity;
 import com.example.tk.SignLog.Sea_deluser_Activity;
 import com.example.tk.userDatabase.user_database;
@@ -20,11 +25,14 @@ public class UserMainActivity extends AppCompatActivity {
     public SQLiteDatabase sql_read;
     private Button search_del_btn, insert_btn, updata_bin;
 
+    public boolean isLoggedIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_layout);
 
+
+        setContentView(R.layout.main_layout);
         user = new user_database(this);
         sql_read = user.getReadableDatabase();
 
