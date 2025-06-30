@@ -11,7 +11,7 @@ public class testweb {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private String serverIp = "10.153.129.199"; // 模拟器中访问本地主机的 IP
+    private String serverIp = "172.20.10.9"; // 本地主机的 IP
     private int serverPort = 29898;
     private boolean isConnected = false;
     private CountDownLatch connectionLatch = new CountDownLatch(1);
@@ -36,7 +36,7 @@ public class testweb {
             e.printStackTrace();
         }
         for(int i = 0; i < 1000000; i++){
-            for(int j=0;j<1000000;j++){
+            for(int j=0;j<100;j++){
                 if (j == 999999){
                     disconnect();
                 }

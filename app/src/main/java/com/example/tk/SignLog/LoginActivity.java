@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity{
 
         // 清空之前的错误提示
         usernameTextInputLayout.setError(null);
-        passwordTextInputLayout.setError(null);
+        //passwordTextInputLayout.setError(null);
 
         // 基本验证：用户名和密码不能为空
         if (username.isEmpty()) {
@@ -119,6 +119,10 @@ public class LoginActivity extends AppCompatActivity{
         testweb inmessage = new testweb();
         inmessage.toserve("D"+ userid +"|"+hashedInputPassword);
         IsLOGIN = inmessage.outmessage;
+        if(IsLOGIN.equals("NULL")){
+            passwordTextInputLayout.setError("密码或用户名错误");
+            return null;
+        }
 
         user_database us_db=new user_database(LoginActivity.this);
         SQLiteDatabase sqLiteDatabase = us_db.getWritableDatabase();

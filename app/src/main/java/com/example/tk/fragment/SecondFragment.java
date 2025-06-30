@@ -142,6 +142,47 @@ public class SecondFragment extends Fragment {
         }, 0, 1, TimeUnit.SECONDS);
     }
 
+    public void onPause() {
+        // 获取传递过来的参数
+        Bundle args = getArguments();
+        String fid;
+        if (args != null) {
+            fid = args.getString("friend_name", "");
+        } else {
+            fid = "";
+        }
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("user_info", MODE_PRIVATE);
+        String userid = sharedPreferences.getString("ID", "");
+        // 每秒执行一次接收消息的任务
+        executor = Executors.newSingleThreadScheduledExecutor();
+        handler = new Handler(Looper.getMainLooper());
+        executor.scheduleWithFixedDelay(() -> {
+            testweb imessage = new testweb();
+            imessage.toserve("R" + userid);
+            String getmg = imessage.outmessage;
+            Log.i("SecondFragment", getmg);
+
+            if (getmg != null && !getmg.isEmpty()) {
+                // 处理接收到的消息
+                String time = ma.getFirstLeftPipe(getmg);
+                String content = ma.getCenter(getmg);
+                String frid = ma.getContentAfterRightPipe(getmg);
+                Log.i("SecondFragment", time + " " + content + " " + frid);
+
+                // 插入消息到数据库
+                dbHelper.insertMessage(frid, userid, content, time);
+
+                // 在主线程中更新 UI
+                handler.post(() -> {
+                    messagesList.add(new MessageInfo(frid, userid, content, time));
+                    messageAdapter.notifyDataSetChanged();
+                    loadMessages(userid, fid);
+                });
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+        super.onPause();
+    }
+
     private void loadMessages(String fid, String userid) {
         // 假设当前用户是 "current_user"，朋友是 "friend_user"
         messagesList.clear();
